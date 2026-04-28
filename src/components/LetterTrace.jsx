@@ -1,42 +1,62 @@
 import { useEffect, useRef, useState } from "react";
 
-const CANVAS_SIZE = 240;
+const MAX_CANVAS_SIZE = 280;
 const STROKE_WIDTH = 10;
 const STROKE_COLOR = "#D90012"; // armenian-red
 
 export default function LetterTrace({ letter, onDone }) {
+  const wrapperRef = useRef(null);
   const canvasRef = useRef(null);
   const drawingRef = useRef(false);
   const lastPointRef = useRef(null);
   const [letterCase, setLetterCase] = useState("upper");
+  const [size, setSize] = useState(MAX_CANVAS_SIZE);
 
   const glyph = letterCase === "upper" ? letter.capital : letter.lowercase;
   const caseWord = letterCase === "upper" ? "capital" : "lowercase";
   // Digraph letters like Ու / ու are 2 Unicode chars; shrink the template
-  // so both forms fit inside the 240px canvas without clipping.
-  const fontSize = glyph.length > 1 ? CANVAS_SIZE * 0.46 : CANVAS_SIZE * 0.78;
+  // so both forms fit inside the canvas without clipping.
+  const fontSize = glyph.length > 1 ? size * 0.46 : size * 0.78;
 
+  // Configure the canvas backing store at the wrapper's actual rendered size,
+  // so the drawing area scales fluidly down on narrow cards (xl 4-col grid).
   useEffect(() => {
+    const wrapper = wrapperRef.current;
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = CANVAS_SIZE * dpr;
-    canvas.height = CANVAS_SIZE * dpr;
-    const ctx = canvas.getContext("2d");
-    ctx.scale(dpr, dpr);
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.strokeStyle = STROKE_COLOR;
-    ctx.lineWidth = STROKE_WIDTH;
+    if (!wrapper || !canvas) return;
+
+    function configure() {
+      const rect = wrapper.getBoundingClientRect();
+      const next = Math.max(1, Math.round(rect.width));
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = next * dpr;
+      canvas.height = next * dpr;
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.strokeStyle = STROKE_COLOR;
+      ctx.lineWidth = STROKE_WIDTH;
+      setSize(next);
+    }
+
+    configure();
+
+    const observer = new ResizeObserver(configure);
+    observer.observe(wrapper);
+    return () => observer.disconnect();
   }, []);
 
   function getPoint(e) {
     const canvas = canvasRef.current;
     if (!canvas) return null;
     const rect = canvas.getBoundingClientRect();
+    // Drawing coords are in CSS px because we ctx.scale(dpr, dpr) above,
+    // so 1 logical unit == 1 CSS pixel of the rendered canvas.
     return {
-      x: ((e.clientX - rect.left) / rect.width) * CANVAS_SIZE,
-      y: ((e.clientY - rect.top) / rect.height) * CANVAS_SIZE,
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
     };
   }
 
@@ -96,10 +116,6 @@ export default function LetterTrace({ letter, onDone }) {
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <p className="text-xs font-bold uppercase tracking-wide text-armenian-ink/50">
-        Trace it
-      </p>
-
       <div
         role="tablist"
         aria-label="Letter case"
@@ -146,8 +162,8 @@ export default function LetterTrace({ letter, onDone }) {
       </div>
 
       <div
-        className="relative rounded-2xl bg-armenian-cream"
-        style={{ width: CANVAS_SIZE, height: CANVAS_SIZE }}
+        ref={wrapperRef}
+        className="relative aspect-square w-full max-w-[280px] rounded-2xl bg-armenian-cream"
       >
         {/* Faded letter template (follows active case) */}
         <div
@@ -165,13 +181,8 @@ export default function LetterTrace({ letter, onDone }) {
           onPointerMove={continueDraw}
           onPointerUp={stopDraw}
           onPointerCancel={stopDraw}
-          onPointerLeave={stopDraw}
-          style={{
-            width: CANVAS_SIZE,
-            height: CANVAS_SIZE,
-            touchAction: "none",
-          }}
-          className="absolute inset-0 cursor-crosshair rounded-2xl"
+          style={{ touchAction: "none" }}
+          className="absolute inset-0 h-full w-full cursor-crosshair rounded-2xl"
           aria-label={`Trace the ${caseWord} form of ${letter.name}`}
         />
       </div>

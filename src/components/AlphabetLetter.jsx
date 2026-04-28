@@ -35,9 +35,12 @@ export default function AlphabetLetter({
   if (mode === "trace") {
     return (
       <article className="card flex flex-col gap-3 p-5">
-        <div className="flex items-baseline justify-between">
+        <div className="flex items-baseline justify-between gap-2">
           <span className="text-xs font-bold uppercase tracking-widest text-armenian-ink/40">
             #{index + 1}
+          </span>
+          <span className="text-xs font-black uppercase tracking-widest text-armenian-apricot">
+            Trace it
           </span>
           <span className="pill">{letter.name}</span>
         </div>
