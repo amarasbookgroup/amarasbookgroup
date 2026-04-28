@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import BookGallery from "../components/BookGallery.jsx";
 import { findBook } from "../data/books.js";
 
 export default function BookDetail() {
@@ -29,15 +30,11 @@ export default function BookDetail() {
       </nav>
 
       <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
-        <div className="relative lg:sticky lg:top-24 lg:self-start">
-          <div className="absolute inset-0 -z-10 translate-x-5 translate-y-5 rounded-3xl bg-armenian-apricot/30" />
-          <div className="overflow-hidden rounded-3xl border border-armenian-ink/10 bg-white shadow-pop">
-            <img
-              src={book.cover}
-              alt={`Cover of ${book.title}`}
-              className="aspect-[4/5] w-full object-cover"
-            />
-          </div>
+        <div className="lg:sticky lg:top-24 lg:self-start">
+          <BookGallery
+            images={book.images ?? [{ src: book.cover, alt: `Cover of ${book.title}` }]}
+            title={book.title}
+          />
         </div>
 
         <div>
