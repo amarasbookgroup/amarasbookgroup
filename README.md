@@ -47,6 +47,38 @@ Output is written to `dist/`.
 - `src/data/books.js` — update the book metadata, price, and Amazon URL as needed.
 - `src/data/alphabet.js` — drop audio file paths into the `audio` field of each letter when ready (`/audio/<letter>.mp3`); the Listen buttons will activate automatically.
 
+## Social share previews (Open Graph)
+
+Each route gets its own pre-rendered HTML with route-specific Open Graph and Twitter card tags so links unfurl with proper previews on Facebook, Twitter/X, iMessage, Slack, etc.
+
+- The **default** share image is the lion mascot card at `public/og/og-default.jpg`.
+- Each **PDP** uses its own card at `public/og/og-<slug>.jpg`.
+- The **Shop** page reuses the latest book's card (currently `books[0]` in [src/data/books.js](src/data/books.js); newest entries should be unshifted to the top of the array).
+
+### When to re-generate the share cards
+
+Run this whenever the mascot, the books data, or any cover image changes:
+
+```bash
+npm run generate-og
+```
+
+This regenerates every `public/og/og-*.jpg` from the SVG layouts in [scripts/generate-og.mjs](scripts/generate-og.mjs). Commit the resulting JPGs.
+
+### How prerendering works
+
+`npm run build` runs `vite build` and then [scripts/prerender.mjs](scripts/prerender.mjs), which writes one `dist/<route>/index.html` per route with the route-specific meta tags swapped in between the `<!-- OG_META_START -->` / `<!-- OG_META_END -->` markers in [index.html](index.html). The site URL comes from `process.env.URL` (auto-injected by Netlify on every deploy, including custom domains). Locally it falls back to `https://amarasbookgroup.netlify.app`.
+
+### Verifying after deploy
+
+- [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/)
+- [Twitter Card Validator](https://cards-dev.twitter.com/validator)
+- Quick local check:
+
+  ```bash
+  curl -s https://amarasbookgroup.netlify.app/shop/my-hye-book | grep -E 'og:(title|image|url)'
+  ```
+
 ## Future: direct checkout
 
 The "Buy on Amazon" button in `src/pages/BookDetail.jsx` is the seam where Stripe Checkout (via a Netlify Function at `/.netlify/functions/create-checkout`) will plug in.
