@@ -73,8 +73,8 @@ function lionSvg({ x = 0, y = 0, size = 380 } = {}) {
       <circle cx="${cx - earOff}" cy="${cy - earOff}" r="${innerEar}" fill="#FFB6A0" />
       <circle cx="${cx + earOff}" cy="${cy - earOff}" r="${innerEar}" fill="#FFB6A0" />
       <ellipse cx="${cx}" cy="${cy + size * 0.03}" rx="${size * 0.29}" ry="${size * 0.28}" fill="url(#face)" />
-      <circle cx="${cx - size * 0.15}" cy="${cy + size * 0.07}" r="${size * 0.045}" fill="#FFB6A0" opacity="0.7" />
-      <circle cx="${cx + size * 0.15}" cy="${cy + size * 0.07}" r="${size * 0.045}" fill="#FFB6A0" opacity="0.7" />
+      <circle cx="${cx - size * 0.155}" cy="${cy + size * 0.085}" r="${size * 0.05}" fill="#FF9C9C" />
+      <circle cx="${cx + size * 0.155}" cy="${cy + size * 0.085}" r="${size * 0.05}" fill="#FF9C9C" />
       <ellipse cx="${cx - eyeOff}" cy="${eyeY}" rx="${eyeR}" ry="${eyeR * 1.15}" fill="${COLORS.ink}" />
       <ellipse cx="${cx + eyeOff}" cy="${eyeY}" rx="${eyeR}" ry="${eyeR * 1.15}" fill="${COLORS.ink}" />
       <circle cx="${cx - eyeOff + size * 0.012}" cy="${eyeY - size * 0.012}" r="${size * 0.011}" fill="#FFFFFF" />
@@ -232,6 +232,36 @@ async function rasterize(svg, outPath) {
     .toFile(outPath);
 }
 
+async function rasterizePng(svg, outPath, size) {
+  await sharp(Buffer.from(svg), { density: 300 })
+    .resize(size, size)
+    .png({ compressionLevel: 9 })
+    .toFile(outPath);
+}
+
+// Apple touch icon: 180x180 PNG. iOS rounds the corners automatically and
+// applies its own gloss, so we fill the whole canvas with the brand apricot
+// and center the lion face. No transparency.
+function appleTouchIconSvg() {
+  const SIZE = 180;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}">
+    ${commonDefs()}
+    <rect width="${SIZE}" height="${SIZE}" fill="${COLORS.apricot}" />
+    ${lionSvg({ x: (SIZE - 160) / 2, y: (SIZE - 160) / 2, size: 160 })}
+  </svg>`;
+}
+
+// Favicon: lion mascot only, no background. Modern browsers will render
+// this on whatever color the tab/browser-chrome happens to be, which keeps
+// the mascot reading naturally in light and dark themes.
+function faviconSvg() {
+  const SIZE = 64;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${SIZE} ${SIZE}">
+    ${commonDefs()}
+    ${lionSvg({ x: 0, y: 0, size: SIZE })}
+  </svg>`;
+}
+
 async function main() {
   await mkdir(OUT, { recursive: true });
 
@@ -249,7 +279,17 @@ async function main() {
     console.log(`  wrote ${out.replace(ROOT + "/", "")}`);
   }
 
-  console.log("\nGenerated OG share cards.");
+  // Apple touch icon (180x180 PNG, lion on apricot background)
+  const touchIconPath = resolve(PUBLIC, "apple-touch-icon.png");
+  await rasterizePng(appleTouchIconSvg(), touchIconPath, 180);
+  console.log(`  wrote ${touchIconPath.replace(ROOT + "/", "")}`);
+
+  // Favicon (SVG, same lion-on-apricot design)
+  const faviconPath = resolve(PUBLIC, "favicon.svg");
+  await writeFile(faviconPath, faviconSvg(), "utf8");
+  console.log(`  wrote ${faviconPath.replace(ROOT + "/", "")}`);
+
+  console.log("\nGenerated OG share cards and app icons.");
 }
 
 main().catch((err) => {

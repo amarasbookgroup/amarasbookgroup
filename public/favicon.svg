@@ -1,8 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <circle cx="32" cy="32" r="30" fill="#F2A800"/>
-  <circle cx="32" cy="34" r="18" fill="#FFD89A"/>
-  <circle cx="24" cy="30" r="2.5" fill="#1B1B2F"/>
-  <circle cx="40" cy="30" r="2.5" fill="#1B1B2F"/>
-  <path d="M32 36 l-4 3 a4 4 0 0 0 8 0 z" fill="#1B1B2F"/>
-  <path d="M32 41 q-4 4 -8 2 M32 41 q4 4 8 2" fill="none" stroke="#1B1B2F" stroke-width="1.6" stroke-linecap="round"/>
-</svg>
+    
+    <defs>
+      <radialGradient id="mane" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="#F2A800" />
+        <stop offset="100%" stop-color="#D17400" />
+      </radialGradient>
+      <radialGradient id="face" cx="50%" cy="45%" r="60%">
+        <stop offset="0%" stop-color="#FFD89A" />
+        <stop offset="100%" stop-color="#F1B45F" />
+      </radialGradient>
+      <pattern id="dots" x="0" y="0" width="36" height="36" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="2" fill="rgba(27,27,47,0.05)" />
+      </pattern>
+    </defs>
+  
+    
+    <g>
+      <circle cx="55.04" cy="32" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="52.75832271647174" cy="41.99668134926854" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="46.36520503482522" cy="50.01339735606341" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="37.12688231835349" cy="54.46233909666921" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="26.87311768164652" cy="54.46233909666921" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="17.63479496517478" cy="50.01339735606341" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="11.241677283528265" cy="41.99668134926854" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="8.96" cy="32" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="11.241677283528265" cy="22.003318650731465" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="17.634794965174777" cy="13.986602643936596" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="26.873117681646512" cy="9.537660903330785" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="37.12688231835348" cy="9.537660903330785" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="46.365205034825216" cy="13.986602643936592" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="52.75832271647174" cy="22.003318650731458" r="7.04" fill="url(#mane)" stroke="#A85A00" stroke-width="0.768"/>
+      <circle cx="32" cy="32" r="25.6" fill="url(#mane)" />
+      <circle cx="18.560000000000002" cy="18.560000000000002" r="4.48" fill="#D17400" />
+      <circle cx="45.44" cy="18.560000000000002" r="4.48" fill="#D17400" />
+      <circle cx="18.560000000000002" cy="18.560000000000002" r="2.24" fill="#FFB6A0" />
+      <circle cx="45.44" cy="18.560000000000002" r="2.24" fill="#FFB6A0" />
+      <ellipse cx="32" cy="33.92" rx="18.56" ry="17.92" fill="url(#face)" />
+      <circle cx="22.08" cy="37.44" r="3.2" fill="#FF9C9C" />
+      <circle cx="41.92" cy="37.44" r="3.2" fill="#FF9C9C" />
+      <ellipse cx="25.6" cy="29.44" rx="2.24" ry="2.576" fill="#1B1B2F" />
+      <ellipse cx="38.4" cy="29.44" rx="2.24" ry="2.576" fill="#1B1B2F" />
+      <circle cx="26.368000000000002" cy="28.672" r="0.704" fill="#FFFFFF" />
+      <circle cx="39.168" cy="28.672" r="0.704" fill="#FFFFFF" />
+      <path d="M 32 37.12 l -2.88 2.24 a 2.24 2.24 0 0 0 5.76 0 z" fill="#1B1B2F" />
+      <path d="M 32 42.24 v 2.56 M 32 44.800000000000004 q -2.88 2.88 -5.76 1.6 M 32 44.800000000000004 q 2.88 2.88 5.76 1.6" fill="none" stroke="#1B1B2F" stroke-width="0.96" stroke-linecap="round" />
+    </g>
+  
+  </svg>
