@@ -8,8 +8,14 @@ Two kinds of tests live here:
 - `visual.spec.ts` — full-page screenshot diffs of every route, used to catch
   unintentional CSS regressions.
 
-Both run via `npx playwright test` (or the package scripts: `npm run test:e2e`,
-`npm run test:e2e:ui`).
+- `npm run test:e2e` — runs the functional specs only (`smoke.spec.ts` +
+  `navigation.spec.ts`). Always passes on a clean clone.
+- `npm run test:visual` — runs the visual specs only. Requires baselines
+  to exist (see "Visual snapshots" below). Will fail the first time you run
+  it locally because the snapshot files have not been committed yet — that
+  is intentional.
+- `npm run test:visual:update` — regenerates the Linux baselines via the
+  Playwright Docker image so they match what CI will diff against.
 
 ## One-time setup
 
