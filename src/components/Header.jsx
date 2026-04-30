@@ -43,7 +43,7 @@ export default function Header() {
           onClick={() => setOpen(false)}
         >
           <img
-            src="/images/amaras_logo_cropped_png.png"
+            src="/images/amaras_logo_png.png"
             alt="Amaras Book Group logo"
             className="h-36 w-36 object-contain"
           />
