@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router";
 import BookGallery from "../components/BookGallery.jsx";
 import { findBook } from "../data/books.js";
 

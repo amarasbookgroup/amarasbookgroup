@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import LionMascot from "../components/LionMascot.jsx";
 
 export default function NotFound() {

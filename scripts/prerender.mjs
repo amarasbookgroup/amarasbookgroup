@@ -10,19 +10,21 @@ import { books } from "../src/data/books.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const ROOT = resolve(__dirname, "..");
-const DIST = resolve(ROOT, "dist");
+const DEFAULT_DIST = resolve(ROOT, "dist");
 
 // Netlify exposes the deploy URL via the URL env var (works for previews
 // and production, including custom domains once configured).
-const SITE_URL = (process.env.URL || "https://amarasbookgroup.netlify.app").replace(/\/$/, "");
+const DEFAULT_SITE_URL = (
+  process.env.URL || "https://amarasbookgroup.netlify.app"
+).replace(/\/$/, "");
 
-const SHARED = {
+export const SHARED = {
   siteName: "Amara's Book Group",
 };
 
 // Route map. PDPs are derived from the books data so adding a new book
 // automatically gets a prerendered page on the next build.
-const routes = [
+export const routes = [
   {
     path: "/",
     title: "Amara's Book Group | Armenian Children's Books",
@@ -58,10 +60,10 @@ const routes = [
   },
 ];
 
-const META_START = "<!-- OG_META_START -->";
-const META_END = "<!-- OG_META_END -->";
+export const META_START = "<!-- OG_META_START -->";
+export const META_END = "<!-- OG_META_END -->";
 
-function escapeAttr(value) {
+export function escapeAttr(value) {
   return String(value)
     .replace(/&/g, "&amp;")
     .replace(/"/g, "&quot;")
@@ -69,7 +71,7 @@ function escapeAttr(value) {
     .replace(/>/g, "&gt;");
 }
 
-function buildMetaBlock({ title, description, image, url }) {
+export function buildMetaBlock({ title, description, image, url }) {
   const e = escapeAttr;
   return [
     META_START,
@@ -87,7 +89,7 @@ function buildMetaBlock({ title, description, image, url }) {
   ].join("\n    ");
 }
 
-function replaceBlock(html, newBlock) {
+export function replaceBlock(html, newBlock) {
   const startIdx = html.indexOf(META_START);
   const endIdx = html.indexOf(META_END);
   if (startIdx === -1 || endIdx === -1) {
@@ -102,14 +104,14 @@ function replaceBlock(html, newBlock) {
   );
 }
 
-function replaceTitle(html, title) {
+export function replaceTitle(html, title) {
   return html.replace(
     /<title>[\s\S]*?<\/title>/,
     `<title>${title.replace(/</g, "&lt;")}</title>`
   );
 }
 
-function replaceDescription(html, description) {
+export function replaceDescription(html, description) {
   const meta = `<meta name="description" content="${escapeAttr(description)}" />`;
   if (/<meta name="description"[^>]*>/.test(html)) {
     return html.replace(/<meta name="description"[^>]*>/, meta);
@@ -117,8 +119,13 @@ function replaceDescription(html, description) {
   return html.replace("</title>", `</title>\n    ${meta}`);
 }
 
-async function main() {
-  const shellPath = resolve(DIST, "index.html");
+export async function main({
+  dist = DEFAULT_DIST,
+  siteUrl = DEFAULT_SITE_URL,
+  routes: routesArg = routes,
+  log = (msg) => console.log(msg),
+} = {}) {
+  const shellPath = resolve(dist, "index.html");
   const shell = await readFile(shellPath, "utf8");
 
   if (!shell.includes(META_START) || !shell.includes(META_END)) {
@@ -128,11 +135,11 @@ async function main() {
   }
 
   let count = 0;
-  for (const route of routes) {
-    const url = `${SITE_URL}${route.path === "/" ? "/" : route.path}`;
+  for (const route of routesArg) {
+    const url = `${siteUrl}${route.path === "/" ? "/" : route.path}`;
     const absoluteImage = route.image.startsWith("http")
       ? route.image
-      : `${SITE_URL}${route.image}`;
+      : `${siteUrl}${route.image}`;
 
     const block = buildMetaBlock({
       title: route.title,
@@ -147,19 +154,24 @@ async function main() {
 
     const outPath =
       route.path === "/"
-        ? resolve(DIST, "index.html")
-        : resolve(DIST, route.path.replace(/^\//, ""), "index.html");
+        ? resolve(dist, "index.html")
+        : resolve(dist, route.path.replace(/^\//, ""), "index.html");
 
     await mkdir(dirname(outPath), { recursive: true });
     await writeFile(outPath, html, "utf8");
     count += 1;
-    console.log(`  prerendered ${route.path} -> ${outPath.replace(ROOT + "/", "")}`);
+    log(`  prerendered ${route.path} -> ${outPath}`);
   }
 
-  console.log(`\nPrerendered ${count} route(s) using SITE_URL=${SITE_URL}`);
+  log(`\nPrerendered ${count} route(s) using SITE_URL=${siteUrl}`);
+  return { count, dist, siteUrl };
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+// Only run when invoked directly (e.g. `node scripts/prerender.mjs`),
+// not when imported by tests.
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

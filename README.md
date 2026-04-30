@@ -14,7 +14,7 @@ Built with Vite + React + React Router + Tailwind CSS. Deployed as a static site
 
 ## Local development
 
-Requires Node 18+.
+Requires Node 20.19+ or 22.12+ (Vite 7).
 
 ```bash
 npm install
@@ -31,6 +31,32 @@ npm run preview
 ```
 
 Output is written to `dist/`.
+
+## Testing
+
+The repo ships with a three-layer test suite:
+
+| Layer | Tool | Command | What it covers |
+| --- | --- | --- | --- |
+| Unit + component | Vitest + React Testing Library | `npm test` | Data helpers, every page renders, route-level interactions, the prerender + OG-card script logic |
+| End-to-end | Playwright (system Chrome) | `npm run test:e2e` | A real production build is served via `vite preview` and every prerendered route is hit; navigation flows are clicked through |
+| Visual regression | Playwright screenshots | `npm run test:visual` | Full-page screenshots of every route diffed against committed Linux baselines (see [e2e/README.md](e2e/README.md)) |
+
+Run them locally with:
+
+```bash
+npm test            # ~3s, no browser required
+npm run test:e2e    # ~30s, needs Google Chrome installed (or run npx playwright install chromium first)
+npm run test:visual # only after baselines have been generated via npm run test:visual:update
+```
+
+`test:e2e` deliberately excludes the visual specs so it always passes on a
+fresh clone. Visual baselines must be generated explicitly (and from a Linux
+container so they match CI byte-for-byte) via `npm run test:visual:update`.
+
+CI runs both via [.github/workflows/test.yml](.github/workflows/test.yml). The
+build step on Netlify intentionally does **not** run tests so deploy minutes
+aren't consumed.
 
 ## Deploy on Netlify
 

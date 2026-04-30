@@ -7,19 +7,34 @@
     "dev": "vite",
     "build": "vite build && node scripts/prerender.mjs",
     "preview": "vite preview",
-    "generate-og": "node scripts/generate-og.mjs"
+    "generate-og": "node scripts/generate-og.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:e2e": "playwright test --ignore-snapshots e2e/smoke.spec.ts e2e/navigation.spec.ts",
+    "test:e2e:ui": "playwright test --ui",
+    "test:visual": "playwright test e2e/visual.spec.ts",
+    "test:visual:update": "docker run --rm -v \"$PWD:/work\" -w /work mcr.microsoft.com/playwright:v1.56.0-jammy bash -c \"npm ci && npx playwright test --update-snapshots e2e/visual.spec.ts\""
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2"
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-router": "^7.14.2"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
+    "@playwright/test": "^1.59.1",
+    "@tailwindcss/postcss": "^4.2.4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@vitejs/plugin-react": "^5.2.0",
+    "@vitest/ui": "^4.1.5",
     "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47",
-    "sharp": "^0.33.5",
-    "tailwindcss": "^3.4.13",
-    "vite": "^5.4.8"
+    "jsdom": "^29.1.1",
+    "postcss": "^8.5.12",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^4.2.4",
+    "vite": "^7.3.2",
+    "vitest": "^4.1.5"
   }
 }

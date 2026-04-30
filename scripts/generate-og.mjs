@@ -29,7 +29,7 @@ const COLORS = {
   inkSoft: "rgba(27,27,47,0.7)",
 };
 
-function escapeXml(s) {
+export function escapeXml(s) {
   return String(s)
     .replace(/&/g, "&amp;")
     .replace(/"/g, "&quot;")
@@ -112,7 +112,7 @@ function commonDefs() {
   `;
 }
 
-function defaultCardSvg() {
+export function defaultCardSvg() {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
     ${commonDefs()}
     <rect width="${W}" height="${H}" fill="${COLORS.cream}" />
@@ -134,7 +134,7 @@ function defaultCardSvg() {
   </svg>`;
 }
 
-function bookCardSvg(book, coverDataUrl) {
+export function bookCardSvg(book, coverDataUrl) {
   const coverW = 360;
   const coverH = 450;
   const coverX = 90;
@@ -242,7 +242,7 @@ async function rasterizePng(svg, outPath, size) {
 // Apple touch icon: 180x180 PNG. iOS rounds the corners automatically and
 // applies its own gloss, so we fill the whole canvas with the brand apricot
 // and center the lion face. No transparency.
-function appleTouchIconSvg() {
+export function appleTouchIconSvg() {
   const SIZE = 180;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}">
     ${commonDefs()}
@@ -254,7 +254,7 @@ function appleTouchIconSvg() {
 // Favicon: lion mascot only, no background. Modern browsers will render
 // this on whatever color the tab/browser-chrome happens to be, which keeps
 // the mascot reading naturally in light and dark themes.
-function faviconSvg() {
+export function faviconSvg() {
   const SIZE = 64;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${SIZE} ${SIZE}">
     ${commonDefs()}
@@ -262,7 +262,7 @@ function faviconSvg() {
   </svg>`;
 }
 
-async function main() {
+export async function main() {
   await mkdir(OUT, { recursive: true });
 
   // Default lion card
@@ -292,7 +292,9 @@ async function main() {
   console.log("\nGenerated OG share cards and app icons.");
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

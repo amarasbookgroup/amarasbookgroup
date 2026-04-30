@@ -1,0 +1,65 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  unit:
+    name: Unit + component
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+
+  e2e:
+    name: E2E + visual
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Install only the browser the suite uses. We rely on Playwright's
+      # bundled Chromium in CI for byte-stable visual baselines (see
+      # e2e/README.md), so we do NOT use `channel: "chrome"` on Linux.
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: Override channel for CI
+        run: |
+          # CI uses the bundled Chromium so screenshots match the committed
+          # Linux baselines exactly.
+          node -e "
+            const fs = require('fs');
+            const p = 'playwright.config.ts';
+            let s = fs.readFileSync(p, 'utf8');
+            s = s.replace(/channel: \"chrome\",?/g, '');
+            fs.writeFileSync(p, s);
+          "
+      - run: npm run test:e2e
+      # Visual specs are gated on baselines existing. They're only added once
+      # the user has committed snapshots from a Linux container.
+      - name: Run visual regression (only if baselines exist)
+        run: |
+          if [ -d e2e/visual.spec.ts-snapshots ]; then
+            npm run test:visual
+          else
+            echo "::notice::No visual baselines committed yet; skipping visual specs."
+          fi
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results
+          retention-days: 14
