@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router";
-import LionMascot from "./LionMascot.jsx";
 
 const NAV = [
   { to: "/", label: "Home", end: true },
@@ -39,15 +38,17 @@ export default function Header() {
     <header className="sticky top-0 z-40 border-b border-armenian-ink/10 bg-armenian-cream/90 backdrop-blur">
       <div className="container-page flex items-center justify-between py-4">
 
-        {/* Left: lion + text (desktop only) */}
+        {/* Left: logo image + text */}
         <Link
           to="/"
-          className="hidden md:flex items-center gap-3"
+          className="flex items-center gap-3"
           onClick={() => setOpen(false)}
         >
-          <span className="grid h-12 w-12 place-items-center rounded-full bg-armenian-blue/10">
-            <LionMascot className="h-10 w-10" title="Amaras Book Group lion mascot" />
-          </span>
+          <img
+            src="/images/amaras_logo_png.png"
+            alt="Amaras Book Group logo"
+            className="h-14 w-14 object-contain"
+          />
           <span className="flex flex-col leading-tight">
             <span className="font-display text-lg font-black text-armenian-ink">
               Amaras Book Group
@@ -56,19 +57,6 @@ export default function Header() {
               Armenian stories
             </span>
           </span>
-        </Link>
-
-        {/* Center: logo (desktop and mobile) */}
-        <Link
-          to="/"
-          className="absolute left-1/2 -translate-x-1/2"
-          onClick={() => setOpen(false)}
-        >
-          <img
-            src="/images/amaras_logo_png.png"
-            alt="Amaras Book Group logo"
-            className="h-16 w-auto object-contain md:h-20"
-          />
         </Link>
 
         {/* Right: nav links (desktop) */}
@@ -84,9 +72,6 @@ export default function Header() {
             </NavLink>
           ))}
         </nav>
-
-        {/* Mobile: spacer to push hamburger right */}
-        <div className="md:hidden w-12" />
 
         {/* Mobile hamburger */}
         <button
@@ -139,15 +124,3 @@ export default function Header() {
                       : "text-armenian-ink hover:bg-armenian-ink/10",
                   ].join(" ")
                 }
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
-        </div>
-      )}
-
-      <span className="sr-only" data-current-path={location.pathname} />
-    </header>
-  );
-}
