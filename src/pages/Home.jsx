@@ -22,7 +22,7 @@ export default function Home() {
               <span className="text-armenian-red">little hearts.</span>
             </h1>
             <p className="mt-5 max-w-lg text-lg text-armenian-ink/80">
-              At Amara's Book Group we publish bright, joyful books that help
+              At Amaras Book Group we publish bright, joyful books that help
               kids fall in love with the Armenian language one letter, one word,
               and one story at a time.
             </p>

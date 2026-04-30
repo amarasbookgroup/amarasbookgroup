@@ -6,7 +6,7 @@ import Footer from "./Footer.jsx";
 describe("<Footer />", () => {
   it("renders the brand name and copyright with the current year", () => {
     renderWithRouter(<Footer />);
-    expect(screen.getAllByText(/Amara's Book Group/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Amaras Book Group/).length).toBeGreaterThan(0);
     const year = String(new Date().getFullYear());
     expect(screen.getByText(new RegExp(year))).toBeInTheDocument();
   });

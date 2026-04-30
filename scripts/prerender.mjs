@@ -19,7 +19,7 @@ const DEFAULT_SITE_URL = (
 ).replace(/\/$/, "");
 
 export const SHARED = {
-  siteName: "Amara's Book Group",
+  siteName: "Amaras Book Group",
 };
 
 // Route map. PDPs are derived from the books data so adding a new book
@@ -27,33 +27,33 @@ export const SHARED = {
 export const routes = [
   {
     path: "/",
-    title: "Amara's Book Group | Armenian Children's Books",
+    title: "Amaras Book Group | Armenian Children's Books",
     description:
       "Bright Armenian children's books supporting Western Armenian language revival.",
     image: "/og/og-default.jpg",
   },
   {
     path: "/shop",
-    title: "Shop | Amara's Book Group",
+    title: "Shop | Amaras Book Group",
     description: "Books to spark a lifelong love of Armenian.",
     // The latest book is books[0] by convention (newest unshifted to the top).
     image: `/og/og-${books[0].slug}.jpg`,
   },
   ...books.map((book) => ({
     path: `/shop/${book.slug}`,
-    title: `${book.title} | Amara's Book Group`,
+    title: `${book.title} | Amaras Book Group`,
     description: book.tagline,
     image: `/og/og-${book.slug}.jpg`,
   })),
   {
     path: "/pronunciation",
-    title: "Pronunciation Help | Amara's Book Group",
+    title: "Pronunciation Help | Amaras Book Group",
     description: "Learn the Armenian alphabet, letter by letter.",
     image: "/og/og-default.jpg",
   },
   {
     path: "/contact",
-    title: "Contact | Amara's Book Group",
+    title: "Contact | Amaras Book Group",
     description:
       "Say barev. Questions, suggestions, and book wait lists welcome.",
     image: "/og/og-default.jpg",

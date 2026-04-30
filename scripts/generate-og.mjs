@@ -119,7 +119,7 @@ export function defaultCardSvg() {
     <rect width="${W}" height="${H}" fill="url(#dots)" />
     ${lionSvg({ x: 80, y: (H - 420) / 2, size: 420 })}
     <g font-family="Fraunces, Georgia, serif">
-      <text x="600" y="220" font-size="80" font-weight="900" fill="${COLORS.ink}">Amara&apos;s</text>
+      <text x="600" y="220" font-size="80" font-weight="900" fill="${COLORS.ink}">Amaras</text>
       <text x="600" y="310" font-size="80" font-weight="900" fill="${COLORS.red}">Book Group</text>
     </g>
     <g font-family="Nunito, sans-serif" fill="${COLORS.inkSoft}">
@@ -171,7 +171,7 @@ export function bookCardSvg(book, coverDataUrl) {
     </g>
 
     <g font-family="Nunito, sans-serif">
-      <text x="${textX}" y="560" font-size="20" font-weight="700" fill="${COLORS.blue}" letter-spacing="3">AMARA&apos;S BOOK GROUP</text>
+      <text x="${textX}" y="560" font-size="20" font-weight="700" fill="${COLORS.blue}" letter-spacing="3">AMARAS BOOK GROUP</text>
     </g>
 
     ${flagStripes(H - 36)}

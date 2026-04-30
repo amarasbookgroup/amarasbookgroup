@@ -1,6 +1,6 @@
-# Amara's Book Group
+# Amaras Book Group
 
-Marketing and storefront site for Amara's Book Group, an Armenian children's book publisher.
+Marketing and storefront site for Amaras Book Group, an Armenian children's book publisher.
 
 Built with Vite + React + React Router + Tailwind CSS. Deployed as a static site on Netlify.
 

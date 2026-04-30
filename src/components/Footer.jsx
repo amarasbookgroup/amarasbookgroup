@@ -19,7 +19,7 @@ export default function Footer() {
             <LionMascot className="h-12 w-12" title="" />
           </span>
           <div>
-            <p className="font-display text-2xl font-black">Amara's Book Group</p>
+            <p className="font-display text-2xl font-black">Amaras Book Group</p>
             <p className="mt-1 text-sm text-armenian-cream/70">
               Armenian children's books to spark a lifelong love of language.
             </p>
@@ -56,7 +56,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-armenian-cream/10">
         <div className="container-page flex flex-col items-start gap-2 py-5 text-xs text-armenian-cream/60 sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} Amara's Book Group. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Amaras Book Group. All rights reserved.</p>
           <p>Made with care for little Armenian readers.</p>
         </div>
       </div>

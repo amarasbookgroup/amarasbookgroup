@@ -107,7 +107,7 @@ export default function Contact() {
           <div className="card p-6">
             <h2 className="font-display text-xl font-bold">A team of one</h2>
             <p className="mt-2 text-sm text-armenian-ink/70">
-              Amara's Book Group is a one-person passion project working to
+              Amaras Book Group is a one-person passion project working to
               support the revival of the Western Armenian language. Every
               message is read personally — thank you for taking the time to
               reach out.

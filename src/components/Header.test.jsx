@@ -14,7 +14,7 @@ function renderAt(path) {
 describe("<Header />", () => {
   it("renders the brand link and every nav entry", () => {
     renderAt("/");
-    expect(screen.getAllByText("Amara's Book Group").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Amaras Book Group").length).toBeGreaterThan(0);
     for (const label of ["Home", "Shop", "Pronunciation Help", "Contact"]) {
       expect(screen.getAllByRole("link", { name: label }).length).toBeGreaterThan(
         0

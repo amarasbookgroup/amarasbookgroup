@@ -9,27 +9,27 @@ import { test, expect } from "@playwright/test";
 const ROUTES = [
   {
     path: "/",
-    title: "Amara's Book Group | Armenian Children's Books",
+    title: "Amaras Book Group | Armenian Children's Books",
     ogImageSuffix: "/og/og-default.jpg",
   },
   {
     path: "/shop/",
-    title: "Shop | Amara's Book Group",
+    title: "Shop | Amaras Book Group",
     ogImageSuffix: "/og/og-my-hye-book.jpg",
   },
   {
     path: "/shop/my-hye-book/",
-    title: "My Hye Book Series: Animals | Amara's Book Group",
+    title: "My Hye Book Series: Animals | Amaras Book Group",
     ogImageSuffix: "/og/og-my-hye-book.jpg",
   },
   {
     path: "/pronunciation/",
-    title: "Pronunciation Help | Amara's Book Group",
+    title: "Pronunciation Help | Amaras Book Group",
     ogImageSuffix: "/og/og-default.jpg",
   },
   {
     path: "/contact/",
-    title: "Contact | Amara's Book Group",
+    title: "Contact | Amaras Book Group",
     ogImageSuffix: "/og/og-default.jpg",
   },
 ];

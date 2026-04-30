@@ -47,11 +47,11 @@ export default function Header() {
           onClick={() => setOpen(false)}
         >
           <span className="grid h-12 w-12 place-items-center rounded-full bg-armenian-blue/10">
-            <LionMascot className="h-10 w-10" title="Amara's Book Group lion mascot" />
+            <LionMascot className="h-10 w-10" title="Amaras Book Group lion mascot" />
           </span>
           <span className="flex flex-col leading-tight">
             <span className="font-display text-lg font-black text-armenian-ink">
-              Amara's Book Group
+              Amaras Book Group
             </span>
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-armenian-red">
               Armenian stories

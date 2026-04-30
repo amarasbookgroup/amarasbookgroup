@@ -21,7 +21,7 @@ describe("generate-og helpers", () => {
     expect(svg).toMatch(/^<svg/);
     expect(svg).toContain('width="1200"');
     expect(svg).toContain('height="630"');
-    expect(svg).toContain("Amara"); // the apostrophe is XML-escaped
+    expect(svg).toContain("Amaras");
     expect(svg).toContain("Book Group");
   });
 
