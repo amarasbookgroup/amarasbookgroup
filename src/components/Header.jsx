@@ -39,10 +39,10 @@ export default function Header() {
     <header className="sticky top-0 z-40 border-b border-armenian-ink/10 bg-armenian-cream/90 backdrop-blur">
       <div className="container-page flex items-center justify-between py-4">
 
-        {/* Left: lion + text */}
+        {/* Left: lion + text (desktop only) */}
         <Link
           to="/"
-          className="flex items-center gap-3"
+          className="hidden md:flex items-center gap-3"
           onClick={() => setOpen(false)}
         >
           <span className="grid h-12 w-12 place-items-center rounded-full bg-armenian-blue/10">
@@ -58,20 +58,20 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Center: company logo */}
+        {/* Center: logo (desktop and mobile) */}
         <Link
           to="/"
-          className="absolute left-1/2 -translate-x-1/2 hidden md:block"
+          className="absolute left-1/2 -translate-x-1/2"
           onClick={() => setOpen(false)}
         >
           <img
-            src="/images/amaras_logo_jpg.jpeg"
+            src="/images/amaras_logo_png.png"
             alt="Amaras Book Group logo"
-            className="h-12 w-auto object-contain"
+            className="h-16 w-auto object-contain md:h-20"
           />
         </Link>
 
-        {/* Right: nav links */}
+        {/* Right: nav links (desktop) */}
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map((item) => (
             <NavLink
@@ -84,6 +84,9 @@ export default function Header() {
             </NavLink>
           ))}
         </nav>
+
+        {/* Mobile: spacer to push hamburger right */}
+        <div className="md:hidden w-12" />
 
         {/* Mobile hamburger */}
         <button
