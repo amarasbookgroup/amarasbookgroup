@@ -1,18 +1,16 @@
 import { useState } from "react";
 
+function InstagramIcon() {
+  return (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>);
+}
+
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(new FormData(form)).toString(),
-    })
-      .then(() => setSubmitted(true))
-      .catch((error) => alert("Something went wrong. Please try again."));
+    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(new FormData(form)).toString() }).then(() => setSubmitted(true)).catch(() => alert("Something went wrong. Please try again."));
   }
 
   return (
@@ -20,31 +18,16 @@ export default function Contact() {
       <div className="grid gap-10 lg:grid-cols-[1.2fr,1fr]">
         <div>
           <span className="pill">Contact</span>
-          <h1 className="mt-3 font-display text-5xl font-black text-armenian-ink">
-            Say parev.
-          </h1>
-          <p className="mt-4 max-w-xl text-lg text-armenian-ink/80">
-            We're a team of one with a great big dream: keeping{" "}
-            <strong>Western Armenian</strong> alive and well for the next
-            generation. If you have a question, a kind comment, a constructive
-            suggestion, or want to offer affordable or free help — please don't
-            be shy.
-          </p>
-          <p className="mt-3 max-w-xl text-armenian-ink/70">
-            For sales inquiries, to be added to a book wait list, or anything
-            else, send a note below or email us directly.
-          </p>
+          <h1 className="mt-3 font-display text-5xl font-black text-armenian-ink">Say parev.</h1>
+          <p className="mt-4 max-w-xl text-lg text-armenian-ink/80">We're a team of one with a great big dream: keeping <strong>Western Armenian</strong> alive and well for the next generation. If you have a question, a kind comment, a constructive suggestion, or want to offer affordable or free help — please don't be shy.</p>
+          <p className="mt-3 max-w-xl text-armenian-ink/70">For sales inquiries, to be added to a book wait list, or anything else, send a note below or email us directly.</p>
 
           {submitted ? (
-            <div className="mt-6 rounded-2xl border border-armenian-blue/30 bg-armenian-blue/10 p-4 text-armenian-blue">
-              Thanks! Your message is on its way. We'll be in touch soon.
-            </div>
+            <div className="mt-6 rounded-2xl border border-armenian-blue/30 bg-armenian-blue/10 p-4 text-armenian-blue">Thanks! Your message is on its way. We'll be in touch soon.</div>
           ) : (
             <form onSubmit={handleSubmit} name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" className="mt-8 grid gap-4">
               <input type="hidden" name="form-name" value="contact" />
-              <p className="hidden">
-                <label>Don't fill this out: <input name="bot-field" /></label>
-              </p>
+              <p className="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
                   <span className="text-sm font-bold text-armenian-ink">Your name</span>
@@ -68,24 +51,21 @@ export default function Contact() {
 
         <aside className="space-y-5">
           <div className="card p-6">
-            <h2 className="font-display text-xl font-bold">Email us directly</h2>
-            <p className="mt-2 text-sm text-armenian-ink/70">Prefer email? Reach us at:</p>
-            <a href="mailto:amarasbookgroup@gmail.com" className="mt-3 inline-block font-bold text-armenian-blue hover:underline">amarasbookgroup@gmail.com</a>
+            <div className="flex flex-wrap items-start gap-6">
+              <div>
+                <h2 className="font-display text-xl font-bold">Email us directly</h2>
+                <p className="mt-2 text-sm text-armenian-ink/70">Prefer email? Reach us at:</p>
+                <a href="mailto:amarasbookgroup@gmail.com" className="mt-3 inline-block font-bold text-armenian-blue hover:underline">amarasbookgroup@gmail.com</a>
+              </div>
+              <div>
+                <h2 className="font-display text-xl font-bold">Follow us</h2>
+                <p className="mt-2 text-sm text-armenian-ink/70">Stay updated on Instagram:</p>
+                <a href="https://www.instagram.com/amarasbookgroup" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 font-bold text-armenian-blue hover:underline"><InstagramIcon />@amarasbookgroup</a>
+              </div>
+            </div>
           </div>
+
           <div className="card p-6">
             <h2 className="font-display text-xl font-bold">A team of one</h2>
             <p className="mt-2 text-sm text-armenian-ink/70">Amaras Book Group is a one-person passion project working to support the revival of the Western Armenian language. Every message is read personally — thank you for taking the time to reach out.</p>
           </div>
-          <div className="card p-6">
-            <h2 className="font-display text-xl font-bold">Wait lists & sales</h2>
-            <p className="mt-2 text-sm text-armenian-ink/70">Interested in upcoming titles, bulk orders for schools, or being added to a book wait list? Mention it in your message and we'll be in touch.</p>
-          </div>
-          <div className="card p-6">
-            <h2 className="font-display text-xl font-bold">Response time</h2>
-            <p className="mt-2 text-sm text-armenian-ink/70">Since it's just one person behind the scenes, replies usually arrive within a few days. Thank you for your patience.</p>
-          </div>
-        </aside>
-      </div>
-    </section>
-  );
-}
