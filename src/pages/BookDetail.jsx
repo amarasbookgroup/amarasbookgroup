@@ -20,6 +20,8 @@ export default function BookDetail() {
     );
   }
 
+  const titleItalic = book.title.replace("My Hye Book:", "").trim();
+
   return (
     <section className="container-page section">
       <nav className="mb-8 text-sm text-armenian-ink/60">
@@ -52,34 +54,40 @@ export default function BookDetail() {
           </div>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href={book.amazonUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="h-4 w-4"
-                aria-hidden="true"
+            {book.amazonUrl && (
+              
+                href={book.amazonUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
               >
-                <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3ZM5 5h6v2H7v10h10v-4h2v6H5V5Z" />
-              </svg>
-              Buy on Amazon
-            </a>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="h-4 w-4"
+                  aria-hidden="true"
+                >
+                  <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3ZM5 5h6v2H7v10h10v-4h2v6H5V5Z" />
+                </svg>
+                Buy on Amazon
+              </a>
+            )}
             <Link to="/pronunciation" className="btn-outline">
               See the alphabet
             </Link>
           </div>
-          <p className="mt-3 text-sm text-armenian-ink/60">
-            Direct checkout coming soon.
-          </p>
+          {book.amazonUrl && (
+            <p className="mt-3 text-sm text-armenian-ink/60">
+              Direct checkout coming soon.
+            </p>
+          )}
 
           <div className="mt-10">
             <h2 className="font-display text-2xl font-black">About this book</h2>
-            <p className="mt-3 text-armenian-ink/80">{book.description}</p>
+            <p className="mt-3 text-armenian-ink/80">
+              <em>My Hye Book: {titleItalic}</em>{book.description.substring(book.description.indexOf(" is "))}
+            </p>
           </div>
 
           <div className="mt-8">
