@@ -1,57 +1,89 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-armenian-red: #d90012;
+  --color-armenian-blue: #0033a0;
+  --color-armenian-apricot: #f2a800;
+  --color-armenian-cream: #fff8ec;
+  --color-armenian-ink: #1b1b2f;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-body: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --shadow-soft: 0 10px 30px -10px rgba(27, 27, 47, 0.25);
+  --shadow-pop: 0 14px 0 -4px rgba(217, 0, 18, 0.15),
+    0 20px 40px -20px rgba(27, 27, 47, 0.4);
+  --background-image-cream-grain: radial-gradient(
+    rgba(27, 27, 47, 0.04) 1px,
+    transparent 1px
+  );
+}
 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
-
   body {
-    @apply bg-armenian-cream text-armenian-ink;
+    background-color: var(--color-armenian-cream);
+    color: var(--color-armenian-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
   }
 }
 
-@layer components {
-  .container-page {
-    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
-  }
-
-  .section {
-    @apply py-16 sm:py-20;
-  }
-
-  .card {
-    @apply rounded-3xl bg-white shadow-soft ring-1 ring-armenian-ink/5;
-  }
-
-  .pill {
-    @apply inline-block rounded-full bg-armenian-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-armenian-blue;
-  }
-
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-bold transition-all;
-  }
-
-  .btn-primary {
-    @apply btn bg-armenian-red text-white hover:bg-armenian-red/90 shadow-soft;
-  }
-
-  .btn-outline {
-    @apply btn border-2 border-armenian-ink/20 text-armenian-ink hover:border-armenian-ink/40;
-  }
-
-  .btn-secondary {
-    @apply btn bg-armenian-blue text-white hover:bg-armenian-blue/90;
-  }
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-semibold transition-all duration-150 active:translate-y-px;
 }
 
-@layer utilities {
-  .shadow-soft {
-    box-shadow: 0 2px 15px -3px rgb(0 0 0 / 0.07), 0 10px 20px -2px rgb(0 0 0 / 0.04);
-  }
+@utility btn-primary {
+  @apply btn bg-armenian-red text-white shadow-pop hover:bg-[#b8000f];
+}
 
-  .shadow-pop {
-    box-shadow: 0 4px 25px -5px rgb(0 0 0 / 0.1), 0 10px 30px -5px rgb(0 0 0 / 0.08);
-  }
+@utility btn-secondary {
+  @apply btn bg-armenian-blue text-white shadow-soft hover:bg-[#002785];
+}
+
+@utility btn-outline {
+  @apply btn border-2 border-armenian-ink text-armenian-ink hover:bg-armenian-ink hover:text-armenian-cream;
+}
+
+@utility container-page {
+  @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+}
+
+@utility section {
+  @apply py-16 sm:py-24;
+}
+
+@utility pill {
+  @apply inline-flex items-center gap-1 rounded-full bg-armenian-apricot/20 px-3 py-1 text-sm font-semibold text-armenian-ink;
+}
+
+@utility card {
+  @apply rounded-3xl border border-armenian-ink/10 bg-white shadow-soft;
+}
+
+@utility flip-container {
+  perspective: 1000px;
+}
+
+@utility flip-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+@utility flip-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@utility flip-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+}
+
+.flip-card.is-flipped {
+  transform: rotateY(180deg);
 }
