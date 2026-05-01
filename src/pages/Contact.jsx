@@ -28,25 +28,42 @@ export default function Contact() {
               <input type="hidden" name="form-name" value="contact" />
               <p className="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
               <div className="grid gap-4 sm:grid-cols-2">
-                <label className="block">
-                  <span className="text-sm font-bold text-armenian-ink">Your name</span>
-                  <input type="text" name="name" required className="mt-1 w-full rounded-xl border border-armenian-ink/15 bg-white px-4 py-3 outline-none focus:border-armenian-blue" />
-                </label>
-                <label className="block">
-                  <span className="text-sm font-bold text-armenian-ink">Email</span>
-                  <input type="email" name="email" required className="mt-1 w-full rounded-xl border border-armenian-ink/15 bg-white px-4 py-3 outline-none focus:border-armenian-blue" />
-                </label>
+                <label className="block"><span className="text-sm font-bold text-armenian-ink">Your name</span><input type="text" name="name" required className="mt-1 w-full rounded-xl border border-armenian-ink/15 bg-white px-4 py-3 outline-none focus:border-armenian-blue" /></label>
+                <label className="block"><span className="text-sm font-bold text-armenian-ink">Email</span><input type="email" name="email" required className="mt-1 w-full rounded-xl border border-armenian-ink/15 bg-white px-4 py-3 outline-none focus:border-armenian-blue" /></label>
               </div>
-              <label className="block">
-                <span className="text-sm font-bold text-armenian-ink">Message</span>
-                <textarea name="message" rows={6} required className="mt-1 w-full rounded-xl border border-armenian-ink/15 bg-white px-4 py-3 outline-none focus:border-armenian-blue" />
-              </label>
-              <div>
-                <button type="submit" className="btn-primary">Send message</button>
-              </div>
+              <label className="block"><span className="text-sm font-bold text-armenian-ink">Message</span><textarea name="message" rows={6} required className="mt-1 w-full rounded-xl border border-armenian-ink/15 bg-white px-4 py-3 outline-none focus:border-armenian-blue" /></label>
+              <div><button type="submit" className="btn-primary">Send message</button></div>
             </form>
           )}
-       </aside>
+        </div>
+        <div className="space-y-5">
+          <div className="card p-6">
+            <div className="flex flex-wrap items-start gap-6">
+              <div>
+                <h2 className="font-display text-xl font-bold">Email us directly</h2>
+                <p className="mt-2 text-sm text-armenian-ink/70">Prefer email? Reach us at:</p>
+                <a href="mailto:amarasbookgroup@gmail.com" className="mt-3 inline-block font-bold text-armenian-blue hover:underline">amarasbookgroup@gmail.com</a>
+              </div>
+              <div>
+                <h2 className="font-display text-xl font-bold">Follow us</h2>
+                <p className="mt-2 text-sm text-armenian-ink/70">Stay updated on Instagram:</p>
+                <a href="https://www.instagram.com/amarasbookgroup" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 font-bold text-armenian-blue hover:underline"><InstagramIcon />@amarasbookgroup</a>
+              </div>
+            </div>
+          </div>
+          <div className="card p-6">
+            <h2 className="font-display text-xl font-bold">A team of one</h2>
+            <p className="mt-2 text-sm text-armenian-ink/70">Amaras Book Group is a one-person passion project working to support the revival of the Western Armenian language. Every message is read personally — thank you for taking the time to reach out.</p>
+          </div>
+          <div className="card p-6">
+            <h2 className="font-display text-xl font-bold">Wait lists & sales</h2>
+            <p className="mt-2 text-sm text-armenian-ink/70">Interested in upcoming titles, bulk orders for schools, or being added to a book wait list? Mention it in your message and we'll be in touch.</p>
+          </div>
+          <div className="card p-6">
+            <h2 className="font-display text-xl font-bold">Response time</h2>
+            <p className="mt-2 text-sm text-armenian-ink/70">Since it's just one person behind the scenes, replies usually arrive within a few days. Thank you for your patience.</p>
+          </div>
+        </div>
       </div>
     </section>
   );
