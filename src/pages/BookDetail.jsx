@@ -16,7 +16,7 @@ function WaitlistForm({ bookName, formName }) {
 
   return (
     <div className="mt-6 rounded-2xl bg-armenian-apricot/10 border border-armenian-apricot/30 p-5">
-      <p className="font-bold text-armenian-ink">Join the Wait List</p>
+      <p className="font-display text-xl font-bold text-armenian-ink">Join the Wait List</p>
       <p className="mt-1 text-sm text-armenian-ink/70">Be the first to know when this book is available.</p>
       <form onSubmit={handleSubmit} name={formName} method="POST" data-netlify="true" className="mt-3 flex flex-col gap-2 sm:flex-row">
         <input type="hidden" name="form-name" value={formName} />
@@ -69,7 +69,7 @@ export default function BookDetail() {
 
           <div className="mt-6 flex flex-wrap gap-3">
             {book.amazonUrl && (<a href={book.amazonUrl} target="_blank" rel="noopener noreferrer" className="btn-primary"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3ZM5 5h6v2H7v10h10v-4h2v6H5V5Z" /></svg>Buy on Amazon</a>)}
-            <Link to="/pronunciation" className="btn-outline">Pronunciation Help</Link>
+            {book.amazonUrl && (<Link to="/pronunciation" className="btn-outline">Pronunciation Help</Link>)}
           </div>
           {book.amazonUrl && (<p className="mt-3 text-sm text-armenian-ink/60">Direct checkout coming soon.</p>)}
 
