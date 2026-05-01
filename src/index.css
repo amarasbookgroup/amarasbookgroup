@@ -23,6 +23,8 @@
   }
   body {
     background-color: var(--color-armenian-cream);
+    background-image: var(--background-image-cream-grain);
+    background-size: 20px 20px;
     color: var(--color-armenian-ink);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
