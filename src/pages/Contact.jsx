@@ -21,7 +21,6 @@ export default function Contact() {
           <h1 className="mt-3 font-display text-5xl font-black text-armenian-ink">Say parev.</h1>
           <p className="mt-4 max-w-xl text-lg text-armenian-ink/80">We're a team of one with a great big dream: keeping <strong>Western Armenian</strong> alive and well for the next generation. If you have a question, a kind comment, a constructive suggestion, or want to offer affordable or free help — please don't be shy.</p>
           <p className="mt-3 max-w-xl text-armenian-ink/70">For sales inquiries, to be added to a book wait list, or anything else, send a note below or email us directly.</p>
-
           {submitted ? (
             <div className="mt-6 rounded-2xl border border-armenian-blue/30 bg-armenian-blue/10 p-4 text-armenian-blue">Thanks! Your message is on its way. We'll be in touch soon.</div>
           ) : (
@@ -48,24 +47,4 @@ export default function Contact() {
             </form>
           )}
         </div>
-
         <aside className="space-y-5">
-          <div className="card p-6">
-            <div className="flex flex-wrap items-start gap-6">
-              <div>
-                <h2 className="font-display text-xl font-bold">Email us directly</h2>
-                <p className="mt-2 text-sm text-armenian-ink/70">Prefer email? Reach us at:</p>
-                <a href="mailto:amarasbookgroup@gmail.com" className="mt-3 inline-block font-bold text-armenian-blue hover:underline">amarasbookgroup@gmail.com</a>
-              </div>
-              <div>
-                <h2 className="font-display text-xl font-bold">Follow us</h2>
-                <p className="mt-2 text-sm text-armenian-ink/70">Stay updated on Instagram:</p>
-                <a href="https://www.instagram.com/amarasbookgroup" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 font-bold text-armenian-blue hover:underline"><InstagramIcon />@amarasbookgroup</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="card p-6">
-            <h2 className="font-display text-xl font-bold">A team of one</h2>
-            <p className="mt-2 text-sm text-armenian-ink/70">Amaras Book Group is a one-person passion project working to support the revival of the Western Armenian language. Every message is read personally — thank you for taking the time to reach out.</p>
-          </div>
