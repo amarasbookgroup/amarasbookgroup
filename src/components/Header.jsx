@@ -1,134 +1,79 @@
-import { useEffect, useState } from "react";
-import { NavLink, Link, useLocation } from "react-router";
+import { Link } from "react-router";
 import LionMascot from "./LionMascot.jsx";
-
-const NAV = [
-  { to: "/", label: "Home", end: true },
-  { to: "/shop", label: "Shop" },
-  { to: "/learn-alphabet", label: "Learn the Alphabet!" },
-  { to: "/pronunciation", label: "Pronunciation Help" },
-  { to: "/contact", label: "Contact" },
-];
-
-function navClass({ isActive }) {
-  return [
-    "rounded-full px-4 py-2 font-semibold transition-colors",
-    isActive
-      ? "bg-armenian-ink text-armenian-cream"
-      : "text-armenian-ink hover:bg-armenian-ink/10",
-  ].join(" ");
-}
+import { useState } from "react";
 
 function InstagramIcon() {
+  return (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>);
+}
+
+function SubscribeForm() {
+  const [submitted, setSubmitted] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(new FormData(form)).toString() }).then(() => setSubmitted(true)).catch(() => setSubmitted(true));
+  }
+
+  if (submitted) return (<p className="text-sm text-armenian-apricot font-semibold">You're on the list! Thank you. 🎉</p>);
+
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-    </svg>
+    <form onSubmit={handleSubmit} name="subscribe" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" className="mt-4 flex flex-col gap-2 sm:flex-row">
+      <input type="hidden" name="form-name" value="subscribe" />
+      <input name="bot-field" className="hidden" />
+      <input type="email" name="email" required placeholder="Your email address" className="w-full rounded-xl border border-armenian-cream/20 bg-armenian-cream/10 px-4 py-2 text-sm text-armenian-cream placeholder:text-armenian-cream/50 outline-none focus:border-armenian-apricot" />
+      <button type="submit" className="whitespace-nowrap rounded-xl bg-armenian-apricot px-4 py-2 text-sm font-bold text-armenian-ink hover:bg-[#ffb724]">Subscribe</button>
+    </form>
   );
 }
 
-export default function Header() {
-  const [open, setOpen] = useState(false);
-  const location = useLocation();
-
-  useEffect(() => {
-    setOpen(false);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    if (!open) return;
-    function onKey(e) {
-      if (e.key === "Escape") setOpen(false);
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
-
+export default function Footer() {
   return (
-    <header className="sticky top-0 z-40 border-b border-armenian-ink/10 bg-armenian-cream/90 backdrop-blur">
-      <div className="container-page flex items-center justify-between py-4">
-        <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <img src="/images/amaras_logo_cropped_png (1).png" alt="Amaras Book Group logo" className="h-8 w-8 object-contain md:h-36 md:w-36" />
-          <span className="flex flex-col leading-tight">
-            <span className="font-display text-lg font-black text-armenian-ink">Amaras Book Group</span>
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-armenian-red">Armenian stories</span>
+    <footer className="mt-12 bg-armenian-ink text-armenian-cream">
+      <div className="h-3 w-full" style={{ backgroundImage: "url('/images/armenian-pattern.svg')", backgroundRepeat: "repeat-x", backgroundSize: "auto 100%" }} aria-hidden="true" />
+      <div className="container-page grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="flex items-start gap-4">
+          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-armenian-cream/10">
+            <LionMascot className="h-12 w-12" title="" />
           </span>
-        </Link>
+          <div>
+            <p className="font-display text-2xl font-black">Amaras Book Group</p>
+            <p className="mt-1 text-sm text-armenian-cream/70">Armenian children's books to spark a lifelong love of language.</p>
+          </div>
+        </div>
 
-        <nav className="hidden items-center gap-1 md:flex">
-          {NAV.map((item) => (
-            <NavLink key={item.to} to={item.to} end={item.end} className={navClass}>
-              {item.label}
-            </NavLink>
-          ))}
-          
-            href="https://www.instagram.com/amarasbookgroup"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Follow us on Instagram"
-            className="rounded-full p-2 text-armenian-ink hover:bg-armenian-ink/10 transition-colors"
-          >
-            <InstagramIcon />
-          </a>
-        </nav>
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-armenian-apricot">Explore</p>
+          <ul className="mt-3 space-y-2 text-sm">
+            <li><Link to="/" className="hover:text-armenian-apricot">Home</Link></li>
+            <li><Link to="/shop" className="hover:text-armenian-apricot">Shop</Link></li>
+            <li><Link to="/learn-alphabet" className="hover:text-armenian-apricot">Learn the Alphabet!</Link></li>
+            <li><Link to="/pronunciation" className="hover:text-armenian-apricot">Pronunciation Help</Link></li>
+            <li><Link to="/contact" className="hover:text-armenian-apricot">Contact</Link></li>
+          </ul>
+        </div>
 
-        <button
-          type="button"
-          aria-label="Toggle navigation"
-          aria-expanded={open}
-          className="md:hidden rounded-full p-2 text-armenian-ink hover:bg-armenian-ink/10"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-            {open ? (
-              <>
-                <line x1="6" y1="6" x2="18" y2="18" />
-                <line x1="6" y1="18" x2="18" y2="6" />
-              </>
-            ) : (
-              <>
-                <line x1="4" y1="7" x2="20" y2="7" />
-                <line x1="4" y1="12" x2="20" y2="12" />
-                <line x1="4" y1="17" x2="20" y2="17" />
-              </>
-            )}
-          </svg>
-        </button>
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-armenian-apricot">Get in touch</p>
+          <p className="mt-3 text-sm text-armenian-cream/80">Have questions about a book, a school order, or pronunciation? We'd love to hear from you.</p>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <Link to="/contact" className="inline-flex items-center gap-2 rounded-full bg-armenian-apricot px-4 py-2 text-sm font-bold text-armenian-ink hover:bg-[#ffb724]">Contact us</Link>
+            <a href="https://www.instagram.com/amarasbookgroup" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram" className="inline-flex items-center gap-2 rounded-full border border-armenian-cream/20 px-4 py-2 text-sm font-bold text-armenian-cream hover:border-armenian-apricot hover:text-armenian-apricot transition-colors"><InstagramIcon />Instagram</a>
+          </div>
+        </div>
       </div>
 
-      {open && (
-        <div className="border-t border-armenian-ink/10 bg-armenian-cream md:hidden">
-          <nav className="container-page flex flex-col py-3">
-            {NAV.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.end}
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  ["rounded-xl px-3 py-3 font-semibold", isActive ? "bg-armenian-ink text-armenian-cream" : "text-armenian-ink hover:bg-armenian-ink/10"].join(" ")
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
-            
-              href="https://www.instagram.com/amarasbookgroup"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-xl px-3 py-3 font-semibold text-armenian-ink hover:bg-armenian-ink/10 flex items-center gap-2"
-              onClick={() => setOpen(false)}
-            >
-              <InstagramIcon />
-              Instagram
-            </a>
-          </nav>
+      <div className="border-t border-armenian-cream/10">
+        <div className="container-page py-8">
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-armenian-apricot mb-2">Stay in the loop</p>
+          <p className="text-sm text-armenian-cream/70">New books, Armenian language tips, and updates — straight to your inbox.</p>
+          <SubscribeForm />
         </div>
-      )}
-
-      <span className="sr-only" data-current-path={location.pathname} />
-    </header>
+        <div className="container-page flex flex-col items-start gap-2 pb-5 text-xs text-armenian-cream/60 sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; {new Date().getFullYear()} Amaras Book Group. All rights reserved.</p>
+          <p>Made with care for little Armenian readers.</p>
+        </div>
+      </div>
+    </footer>
   );
 }
