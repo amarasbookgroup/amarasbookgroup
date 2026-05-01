@@ -96,11 +96,8 @@ export default function Home() {
               ))}
             </ul>
             <div className="mt-7 flex flex-wrap gap-3">
-              <Link to={`/shop/${featured.slug}`} className="btn-primary">See the book</Link>
-              <a href={featured.amazonUrl} target="_blank" rel="noopener noreferrer" className="btn-outline">Buy on Amazon</a>
-            </div>
-            <div className="mt-8">
-              <Link to="/shop" className="btn-primary" style={{fontSize:"1.1rem",padding:"0.75rem 2.5rem"}}>See All Books &rarr;</Link>
+              <a href={featured.amazonUrl} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{fontSize:"1rem"}}>Buy on Amazon</a>
+              <Link to="/shop" className="btn-outline" style={{fontSize:"1rem",boxShadow:"none"}}>See All Books &rarr;</Link>
             </div>
           </div>
         </div>
