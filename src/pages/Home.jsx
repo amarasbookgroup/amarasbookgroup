@@ -80,8 +80,33 @@ export default function Home() {
           <h2 className="mt-3 font-display text-4xl font-black text-armenian-ink sm:text-5xl">Our Flagship Book.</h2>
           <p className="mt-2 text-lg text-armenian-ink/60">The book that started it all...</p>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"300px 1fr",gap:"2.5rem",marginTop:"2.5rem",alignItems:"start"}}>
+
+        {/* Desktop layout */}
+        <div style={{display:"grid",gridTemplateColumns:"300px 1fr",gap:"2.5rem",marginTop:"2.5rem",alignItems:"start"}} className="hidden lg:grid">
           <div>
+            <BookCard book={featured} />
+          </div>
+          <div>
+            <h3 className="font-display text-3xl font-black text-armenian-ink">{featured.title}</h3>
+            <p className="mt-3 text-lg text-armenian-ink/80">{featured.description}</p>
+            <ul className="mt-5 space-y-2 text-armenian-ink/80">
+              {featured.highlights.map((h) => (
+                <li key={h} className="flex items-start gap-3">
+                  <span className="mt-2 inline-block h-2 w-2 shrink-0 rounded-full bg-armenian-red" />
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a href={featured.amazonUrl} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{fontSize:"1rem"}}>Buy on Amazon</a>
+              <Link to="/shop" className="btn-outline" style={{fontSize:"1rem",boxShadow:"none"}}>See All Books &rarr;</Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile layout */}
+        <div className="lg:hidden mt-10 flex flex-col gap-6">
+          <div className="mx-auto w-full max-w-xs">
             <BookCard book={featured} />
           </div>
           <div>
