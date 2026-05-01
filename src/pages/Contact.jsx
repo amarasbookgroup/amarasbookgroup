@@ -42,7 +42,7 @@ export default function Contact() {
               <p className="mt-2 text-sm text-armenian-ink/70">Reach us at:</p>
               <a href="mailto:amarasbookgroup@gmail.com" className="mt-2 inline-block text-sm font-bold text-armenian-blue hover:underline break-all">amarasbookgroup@gmail.com</a>
               <p className="mt-3 text-sm text-armenian-ink/70">Follow us on Instagram:</p>
-              <a href="https://www.instagram.com/amarasbookgroup" target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-2 text-sm font-bold text-armenian-blue hover:underline"><InstagramIcon />@amarasbookgroup</a>
+              <a href="https://www.instagram.com/amarasbookgroup" target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-2 text-sm font-bold text-armenian-blue hover:underline break-all"><InstagramIcon />@amarasbookgroup</a>
             </div>
             <div className="card p-5">
               <h2 className="font-display text-lg font-bold">A team of one</h2>
