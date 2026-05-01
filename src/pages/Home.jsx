@@ -6,6 +6,32 @@ import { alphabet } from "../data/alphabet.js";
 
 const TEASER_INDICES = [0, 14, 19];
 
+function SubscribeBar() {
+  const [submitted, setSubmitted] = React.useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(new FormData(form)).toString() }).then(() => setSubmitted(true)).catch(() => setSubmitted(true));
+  }
+
+  if (submitted) return (<div className="rounded-2xl bg-armenian-blue/10 border border-armenian-blue/30 p-6 text-center text-armenian-blue font-semibold">You're on the list! Thank you. 🎉</div>);
+
+  return (
+    <div className="rounded-3xl bg-armenian-ink text-armenian-cream p-8">
+      <div className="max-w-xl mx-auto text-center">
+        <p className="font-display text-2xl font-black">Stay in the loop</p>
+        <p className="mt-2 text-armenian-cream/70">New books, Armenian language tips, and updates — straight to your inbox.</p>
+        <form onSubmit={handleSubmit} name="subscribe" method="POST" data-netlify="true" className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <input type="hidden" name="form-name" value="subscribe" />
+          <input type="email" name="email" required placeholder="Your email address" className="w-full sm:w-80 rounded-xl border border-armenian-cream/20 bg-armenian-cream/10 px-4 py-3 text-sm text-armenian-cream placeholder:text-armenian-cream/50 outline-none focus:border-armenian-apricot" />
+          <button type="submit" className="whitespace-nowrap rounded-xl bg-armenian-apricot px-6 py-3 text-sm font-bold text-armenian-ink hover:bg-[#ffb724]">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const featured = books[0];
   const teaser = TEASER_INDICES.map((i) => alphabet[i]);
@@ -16,19 +42,11 @@ export default function Home() {
         <div className="container-page section grid items-center gap-10 lg:grid-cols-2">
           <div>
             <div className="mb-6">
-              <p className="font-display text-2xl font-black text-armenian-red leading-tight sm:text-3xl">
-                Teach Your Child Armenian.
-                <br />No Fluency Required.
-              </p>
+              <p className="font-display text-2xl font-black text-armenian-red leading-tight sm:text-3xl">Teach Your Child Armenian.<br />No Fluency Required.</p>
               <div className="mt-2 h-px bg-armenian-red" />
             </div>
-            <h1 className="mt-4 font-display text-5xl font-black leading-[1.05] text-armenian-ink sm:text-6xl">
-              Armenian stories for{" "}
-              <span className="text-armenian-red">little hearts.</span>
-            </h1>
-            <p className="mt-5 max-w-lg text-lg text-armenian-ink/80">
-              At Amaras Book Group, we publish bright, joyful books that help kids fall in love with the Armenian language, one word at a time.
-            </p>
+            <h1 className="mt-4 font-display text-5xl font-black leading-[1.05] text-armenian-ink sm:text-6xl">Armenian stories for{" "}<span className="text-armenian-red">little hearts.</span></h1>
+            <p className="mt-5 max-w-lg text-lg text-armenian-ink/80">At Amaras Book Group, we publish bright, joyful books that help kids fall in love with the Armenian language, one word at a time.</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/shop" className="btn-primary">Shop the Books</Link>
               <Link to="/pronunciation" className="btn-outline">Help with Pronunciation</Link>
@@ -55,16 +73,10 @@ export default function Home() {
         <div className="container-page section grid gap-10 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <h2 className="font-display text-4xl font-black sm:text-5xl">The lion is at the heart of every page.</h2>
-            <p className="mt-5 max-w-2xl text-lg text-armenian-cream/80">
-              In Armenian storytelling the lion stands for courage, family, and joy — a perfect companion for early readers. Throughout our books he hops, roars, and reads alongside your child, turning each letter into a tiny adventure.
-            </p>
+            <p className="mt-5 max-w-2xl text-lg text-armenian-cream/80">In Armenian storytelling the lion stands for courage, family, and joy — a perfect companion for early readers. Throughout our books he hops, roars, and reads alongside your child, turning each letter into a tiny adventure.</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-            {[
-              { title: "Brave", body: "Encourages curiosity and confident reading." },
-              { title: "Warm", body: "Soft, friendly art that kids want to hug." },
-              { title: "Proudly Hye", body: "Celebrates Armenian heritage on every page." },
-            ].map((item) => (
+            {[{ title: "Brave", body: "Encourages curiosity and confident reading." }, { title: "Warm", body: "Soft, friendly art that kids want to hug." }, { title: "Proudly Hye", body: "Celebrates Armenian heritage on every page." }].map((item) => (
               <div key={item.title} className="rounded-2xl bg-armenian-cream/10 p-5 backdrop-blur">
                 <p className="font-display text-xl font-bold text-armenian-apricot">{item.title}</p>
                 <p className="mt-1 text-sm text-armenian-cream/80">{item.body}</p>
@@ -80,22 +92,13 @@ export default function Home() {
           <h2 className="mt-3 font-display text-4xl font-black text-armenian-ink sm:text-5xl">Our Flagship Book.</h2>
           <p className="mt-2 text-lg text-armenian-ink/60">The book that started it all...</p>
         </div>
-
-        {/* Mobile layout - stacked */}
         <div className="mt-10 flex flex-col gap-6 lg:hidden">
-          <div className="mx-auto w-full max-w-xs">
-            <BookCard book={featured} />
-          </div>
+          <div className="mx-auto w-full max-w-xs"><BookCard book={featured} /></div>
           <div>
             <h3 className="font-display text-3xl font-black text-armenian-ink">{featured.title}</h3>
             <p className="mt-3 text-lg text-armenian-ink/80">{featured.description}</p>
             <ul className="mt-5 space-y-2 text-armenian-ink/80">
-              {featured.highlights.map((h) => (
-                <li key={h} className="flex items-start gap-3">
-                  <span className="mt-2 inline-block h-2 w-2 shrink-0 rounded-full bg-armenian-red" />
-                  <span>{h}</span>
-                </li>
-              ))}
+              {featured.highlights.map((h) => (<li key={h} className="flex items-start gap-3"><span className="mt-2 inline-block h-2 w-2 shrink-0 rounded-full bg-armenian-red" /><span>{h}</span></li>))}
             </ul>
             <div className="mt-7 flex flex-wrap gap-3">
               <a href={featured.amazonUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">Buy on Amazon</a>
@@ -103,22 +106,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        {/* Desktop layout - side by side */}
         <div className="mt-10 hidden lg:flex lg:flex-row lg:gap-10">
-          <div className="w-72 shrink-0">
-            <BookCard book={featured} />
-          </div>
+          <div className="w-72 shrink-0"><BookCard book={featured} /></div>
           <div>
             <h3 className="font-display text-3xl font-black text-armenian-ink">{featured.title}</h3>
             <p className="mt-3 text-lg text-armenian-ink/80">{featured.description}</p>
             <ul className="mt-5 space-y-2 text-armenian-ink/80">
-              {featured.highlights.map((h) => (
-                <li key={h} className="flex items-start gap-3">
-                  <span className="mt-2 inline-block h-2 w-2 shrink-0 rounded-full bg-armenian-red" />
-                  <span>{h}</span>
-                </li>
-              ))}
+              {featured.highlights.map((h) => (<li key={h} className="flex items-start gap-3"><span className="mt-2 inline-block h-2 w-2 shrink-0 rounded-full bg-armenian-red" /><span>{h}</span></li>))}
             </ul>
             <div className="mt-7 flex flex-wrap gap-3">
               <a href={featured.amazonUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">Buy on Amazon</a>
@@ -126,6 +120,10 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="container-page pb-10">
+        <SubscribeBar />
       </section>
 
       <section className="bg-armenian-apricot/15">
