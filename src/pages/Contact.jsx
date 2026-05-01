@@ -46,5 +46,8 @@ export default function Contact() {
               </div>
             </form>
           )}
-        </div>
-        <aside className="space-y-5">
+       </aside>
+      </div>
+    </section>
+  );
+}
