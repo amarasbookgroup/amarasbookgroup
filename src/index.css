@@ -1,106 +1,52 @@
-@import "tailwindcss";
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#F2A800" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Bright Armenian children's books supporting Western Armenian language revival." />
+    <title>Amaras Book Group | Armenian Children's Books</title>
+    <!-- OG_META_START -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Amaras Book Group" />
+    <meta property="og:title" content="Amaras Book Group | Armenian Children's Books" />
+    <meta property="og:description" content="Bright Armenian children's books supporting Western Armenian language revival." />
+    <meta property="og:image" content="https://amarasbookgroup.netlify.app/og/og-default.jpg" />
+    <meta property="og:url" content="https://amarasbookgroup.netlify.app/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Amaras Book Group | Armenian Children's Books" />
+    <meta name="twitter:description" content="Bright Armenian children's books supporting Western Armenian language revival." />
+    <meta name="twitter:image" content="https://amarasbookgroup.netlify.app/og/og-default.jpg" />
+    <!-- OG_META_END -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Hidden forms for Netlify Forms detection -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+    </form>
+    <form name="subscribe" netlify hidden>
+      <input type="email" name="email" />
+    </form>
+    <form name="waitlist-plants" netlify hidden>
+      <input type="email" name="email" />
+      <input type="text" name="book" />
+    </form>
+    <form name="waitlist-home" netlify hidden>
+      <input type="email" name="email" />
+      <input type="text" name="book" />
+    </form>
+    <form name="pronunciation-notify" netlify hidden>
+      <input type="email" name="email" />
+    </form>
 
-@theme {
-  --color-armenian-red: #d90012;
-  --color-armenian-blue: #0033a0;
-  --color-armenian-apricot: #f2a800;
-  --color-armenian-cream: #fff8ec;
-  --color-armenian-ink: #1b1b2f;
-
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
-  --font-body: "Nunito", ui-sans-serif, system-ui, sans-serif;
-
-  --shadow-soft: 0 10px 30px -10px rgba(27, 27, 47, 0.25);
-  --shadow-pop: 0 14px 0 -4px rgba(217, 0, 18, 0.15),
-    0 20px 40px -20px rgba(27, 27, 47, 0.4);
-
-  --background-image-cream-grain: radial-gradient(
-    rgba(27, 27, 47, 0.04) 1px,
-    transparent 1px
-  );
-}
-
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    @apply bg-armenian-cream text-armenian-ink font-body antialiased;
-    background-image: radial-gradient(
-      rgba(27, 27, 47, 0.05) 1px,
-      transparent 1px
-    );
-    background-size: 24px 24px;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply font-display font-bold tracking-tight;
-  }
-
-  :focus-visible {
-    @apply outline-none ring-2 ring-armenian-blue ring-offset-2 ring-offset-armenian-cream;
-  }
-}
-
-@utility btn {
-  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-semibold transition-all duration-150 active:translate-y-px;
-}
-
-@utility btn-primary {
-  @apply btn bg-armenian-red text-white shadow-pop hover:bg-[#b8000f];
-}
-
-@utility btn-secondary {
-  @apply btn bg-armenian-blue text-white shadow-soft hover:bg-[#002785];
-}
-
-@utility btn-outline {
-  @apply btn border-2 border-armenian-ink text-armenian-ink hover:bg-armenian-ink hover:text-armenian-cream;
-}
-
-@utility container-page {
-  @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
-}
-
-@utility section {
-  @apply py-16 sm:py-24;
-}
-
-@utility pill {
-  @apply inline-flex items-center gap-1 rounded-full bg-armenian-apricot/20 px-3 py-1 text-sm font-semibold text-armenian-ink;
-}
-
-@utility card {
-  @apply rounded-3xl border border-armenian-ink/10 bg-white shadow-soft;
-}
-
-@utility flip-container {
-  perspective: 1000px;
-}
-
-@utility flip-card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-  transform-style: preserve-3d;
-}
-
-@utility flip-face {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-@utility flip-back {
-  position: absolute;
-  inset: 0;
-  transform: rotateY(180deg);
-}
-
-.flip-card.is-flipped {
-  transform: rotateY(180deg);
-}
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
