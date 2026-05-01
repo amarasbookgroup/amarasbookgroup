@@ -136,7 +136,7 @@ export default function BookGallery({ images, title }) {
             aria-current={active === i}
             className={["overflow-hidden rounded-2xl border-2 bg-white transition-all", active === i ? "border-armenian-red shadow-soft" : "border-transparent opacity-70 hover:opacity-100"].join(" ")}
           >
-            <img src={img.src} alt={img.alt} loading="lazy" decoding="async" className="aspect-square w-full object-contain" />
+            <img src={img.src} alt={img.alt} loading="lazy" decoding="async" className="aspect-video w-full object-contain" />
           </button>
         ))}
       </div>
