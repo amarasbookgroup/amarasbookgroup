@@ -10,7 +10,7 @@ export default function Contact() {
   function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(new FormData(form)).toString() }).then(() => setSubmitted(true)).catch(() => alert("Something went wrong. Please try again."));
+    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(new FormData(form)).toString() }).then(() => setSubmitted(true)).catch(() => alert("Something went wrong."));
   }
 
   return (
@@ -24,6 +24,8 @@ export default function Contact() {
           {submitted ? (
             <div className="mt-6 rounded-2xl border border-armenian-blue/30 bg-armenian-blue/10 p-4 text-armenian-blue">Thanks! Your message is on its way. We'll be in touch soon.</div>
           ) : (
-            <form onSubmit={handleSubmit} name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" className="mt-8 grid gap-4">
+            <form onSubmit={handleSubmit} name="contact" method="POST" data-netlify="true" className="mt-8 grid gap-4">
               <input type="hidden" name="form-name" value="contact" />
-              <p className="hidden"><labe
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="block"><span className="text-sm font-bold text-armenian-ink">Your name</span><input type="text" name="name" required className="mt-1 w-full rounded-xl border border-armenian-ink/15 bg-white px-4 py-3 outline-none focus:border-armenian-blue" /></label>
+                <label className="block"><span className="text-sm font-bold text-armenian-ink">Email</span><input type="email" name="email" required className="mt-1 w-full rounded-xl border border-armenian-ink/15 bg-white px-4 py-3 outline-none focus:b
