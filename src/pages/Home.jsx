@@ -4,7 +4,7 @@ import BookCard from "../components/BookCard.jsx";
 import { books } from "../data/books.js";
 import { alphabet } from "../data/alphabet.js";
 
-const TEASER_INDICES = [0, 14, 19]; // Ա, Կ, Մ — ayp, gen, men
+const TEASER_INDICES = [0, 14, 19];
 
 export default function Home() {
   const featured = books[0];
