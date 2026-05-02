@@ -66,19 +66,8 @@ export default function BookGallery({ images, title }) {
     <div className="relative">
       <div className="absolute inset-0 -z-10 translate-x-5 translate-y-5 rounded-3xl bg-armenian-apricot/30" />
 
-      {/* Desktop: single static main image */}
-      <button
-        type="button"
-        onClick={() => setLightboxOpen(true)}
-        className="group hidden w-full overflow-hidden rounded-3xl border border-armenian-ink/10 bg-white shadow-pop sm:block"
-        aria-label={`Enlarge image: ${current.alt}`}
-      >
-        <img
-          src={current.src}
-          alt={current.alt}
-          decoding="async"
-          className="aspect-[4/5] w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
-        />
+      <button type="button" onClick={() => setLightboxOpen(true)} className="group hidden w-full overflow-hidden rounded-3xl border border-armenian-ink/10 bg-white shadow-pop sm:block" aria-label={`Enlarge image: ${current.alt}`}>
+        <img src={current.src} alt={current.alt} decoding="async" className="aspect-[4/5] w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]" />
         <span className="pointer-events-none absolute right-5 top-5 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-armenian-ink shadow-soft opacity-0 transition-opacity group-hover:opacity-100">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5" aria-hidden="true">
             <circle cx="11" cy="11" r="7" />
@@ -90,67 +79,30 @@ export default function BookGallery({ images, title }) {
         </span>
       </button>
 
-      {/* Mobile: swipeable carousel */}
-      <div
-        ref={trackRef}
-        onScroll={onScroll}
-        className="flex w-full snap-x snap-mandatory overflow-x-auto rounded-3xl border border-armenian-ink/10 bg-white shadow-pop sm:hidden"
-        style={{ scrollbarWidth: "none" }}
-      >
+      <div ref={trackRef} onScroll={onScroll} className="flex w-full snap-x snap-mandatory overflow-x-auto rounded-3xl border border-armenian-ink/10 bg-white shadow-pop sm:hidden" style={{ scrollbarWidth: "none" }}>
         {images.map((img, i) => (
-          <button
-            key={img.src}
-            type="button"
-            onClick={() => { setActive(i); setLightboxOpen(true); }}
-            className="relative w-full shrink-0 snap-center"
-            aria-label={`Image ${i + 1} of ${images.length}: ${img.alt}`}
-          >
+          <button key={img.src} type="button" onClick={() => { setActive(i); setLightboxOpen(true); }} className="relative w-full shrink-0 snap-center" aria-label={`Image ${i + 1} of ${images.length}: ${img.alt}`}>
             <img src={img.src} alt={img.alt} loading="lazy" decoding="async" className="aspect-[4/5] w-full object-contain" />
           </button>
         ))}
       </div>
 
-      {/* Mobile dots */}
       <div className="mt-3 flex justify-center gap-2 sm:hidden" role="tablist">
         {images.map((img, i) => (
-          <button
-            key={img.src}
-            type="button"
-            role="tab"
-            aria-selected={active === i}
-            aria-label={`Show image ${i + 1}`}
-            onClick={() => setActive(i)}
-            className={["h-2 rounded-full transition-all", active === i ? "w-6 bg-armenian-red" : "w-2 bg-armenian-ink/30"].join(" ")}
-          />
+          <button key={img.src} type="button" role="tab" aria-selected={active === i} aria-label={`Show image ${i + 1}`} onClick={() => setActive(i)} className={["h-2 rounded-full transition-all", active === i ? "w-6 bg-armenian-red" : "w-2 bg-armenian-ink/30"].join(" ")} />
         ))}
       </div>
 
-      {/* Desktop thumbnails */}
       <div className="mt-4 hidden grid-cols-4 gap-3 sm:grid">
         {images.map((img, i) => (
-          <button
-            key={img.src}
-            type="button"
-            onClick={() => setActive(i)}
-            aria-label={`Show ${img.alt}`}
-            aria-current={active === i}
-            className={["overflow-hidden rounded-2xl border-2 bg-white transition-all", active === i ? "border-armenian-red shadow-soft" : "border-transparent opacity-70 hover:opacity-100"].join(" ")}
-          >
+          <button key={img.src} type="button" onClick={() => setActive(i)} aria-label={`Show ${img.alt}`} aria-current={active === i} className={["overflow-hidden rounded-2xl border-2 bg-white transition-all", active === i ? "border-armenian-red shadow-soft" : "border-transparent opacity-70 hover:opacity-100"].join(" ")}>
             <img src={img.src} alt={img.alt} loading="lazy" decoding="async" className="aspect-video w-full object-contain" />
           </button>
         ))}
       </div>
 
       {lightboxOpen && (
-        <Lightbox
-          images={images}
-          activeIndex={active}
-          title={title}
-          onClose={() => setLightboxOpen(false)}
-          onPrev={() => setActive((i) => (i - 1 + images.length) % images.length)}
-          onNext={() => setActive((i) => (i + 1) % images.length)}
-          onSelect={(i) => setActive(i)}
-        />
+        <Lightbox images={images} activeIndex={active} title={title} onClose={() => setLightboxOpen(false)} onPrev={() => setActive((i) => (i - 1 + images.length) % images.length)} onNext={() => setActive((i) => (i + 1) % images.length)} onSelect={(i) => setActive(i)} />
       )}
     </div>
   );
@@ -159,13 +111,7 @@ export default function BookGallery({ images, title }) {
 function Lightbox({ images, activeIndex, title, onClose, onPrev, onNext, onSelect }) {
   const current = images[activeIndex];
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label={`Image viewer for ${title}`}
-      className="fixed inset-0 z-50 flex flex-col bg-armenian-ink/95 backdrop-blur"
-      onClick={onClose}
-    >
+    <div role="dialog" aria-modal="true" aria-label={`Image viewer for ${title}`} className="fixed inset-0 z-[100] flex flex-col bg-armenian-ink/95 backdrop-blur" onClick={onClose}>
       <div className="flex items-center justify-between p-4 text-armenian-cream">
         <p className="text-sm font-semibold">
           {activeIndex + 1} / {images.length}{" "}
@@ -197,14 +143,7 @@ function Lightbox({ images, activeIndex, title, onClose, onPrev, onNext, onSelec
 
       <div className="flex justify-center gap-2 px-4 pb-6" onClick={(e) => e.stopPropagation()}>
         {images.map((img, i) => (
-          <button
-            key={img.src}
-            type="button"
-            onClick={() => onSelect(i)}
-            aria-label={`Show ${img.alt}`}
-            aria-current={activeIndex === i}
-            className={["h-14 w-14 overflow-hidden rounded-lg border-2 transition-all", activeIndex === i ? "border-armenian-apricot" : "border-transparent opacity-60 hover:opacity-100"].join(" ")}
-          >
+          <button key={img.src} type="button" onClick={() => onSelect(i)} aria-label={`Show ${img.alt}`} aria-current={activeIndex === i} className={["h-14 w-14 overflow-hidden rounded-lg border-2 transition-all", activeIndex === i ? "border-armenian-apricot" : "border-transparent opacity-60 hover:opacity-100"].join(" ")}>
             <img src={img.src} alt="" className="h-full w-full object-contain" />
           </button>
         ))}
