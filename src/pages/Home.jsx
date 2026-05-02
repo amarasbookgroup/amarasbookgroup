@@ -9,11 +9,16 @@ const TEASER_INDICES = [0, 14, 19];
 
 function SubscribeBar() {
   const [submitted, setSubmitted] = useState(false);
+  const [email, setEmail] = useState("");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const form = e.target;
-    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(new FormData(form)).toString() }).then(() => setSubmitted(true)).catch(() => setSubmitted(true));
+    try {
+      await fetch("/api/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) });
+      setSubmitted(true);
+    } catch {
+      setSubmitted(true);
+    }
   }
 
   if (submitted) return (<div className="rounded-2xl bg-armenian-blue/10 border border-armenian-blue/30 p-6 text-center text-armenian-blue font-semibold">You're on the list! Thank you. 🎉</div>);
@@ -23,11 +28,10 @@ function SubscribeBar() {
       <div className="max-w-xl mx-auto text-center">
         <p className="font-display text-2xl font-black">Stay in the loop</p>
         <p className="mt-2 text-armenian-cream/70">New books, Armenian language tips, and updates — straight to your inbox.</p>
-        <form onSubmit={handleSubmit} name="subscribe" method="POST" data-netlify="true" className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <input type="hidden" name="form-name" value="subscribe" />
-          <input type="email" name="email" required placeholder="Your email address" className="w-full sm:w-80 rounded-xl border border-armenian-cream/20 bg-armenian-cream/10 px-4 py-3 text-sm text-armenian-cream placeholder:text-armenian-cream/50 outline-none focus:border-armenian-apricot" />
-          <button type="submit" className="whitespace-nowrap rounded-xl bg-armenian-apricot px-6 py-3 text-sm font-bold text-armenian-ink hover:bg-[#ffb724]">Subscribe</button>
-        </form>
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <input type="email" required placeholder="Your email address" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full sm:w-80 rounded-xl border border-armenian-cream/20 bg-armenian-cream/10 px-4 py-3 text-sm text-armenian-cream placeholder:text-armenian-cream/50 outline-none focus:border-armenian-apricot" />
+          <button onClick={handleSubmit} className="whitespace-nowrap rounded-xl bg-armenian-apricot px-6 py-3 text-sm font-bold text-armenian-ink hover:bg-[#ffb724]">Subscribe</button>
+        </div>
       </div>
     </div>
   );
@@ -93,6 +97,7 @@ export default function Home() {
           <h2 className="mt-3 font-display text-4xl font-black text-armenian-ink sm:text-5xl">Our Flagship Book.</h2>
           <p className="mt-2 text-lg text-armenian-ink/60">The book that started it all...</p>
         </div>
+
         <div className="mt-10 flex flex-col gap-6 lg:hidden">
           <div className="mx-auto w-full max-w-xs"><BookCard book={featured} /></div>
           <div>
@@ -107,6 +112,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+
         <div className="mt-10 hidden lg:flex lg:flex-row lg:gap-10">
           <div className="w-72 shrink-0"><BookCard book={featured} /></div>
           <div>
