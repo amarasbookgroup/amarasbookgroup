@@ -5,31 +5,40 @@ import { Link } from "react-router";
 
 function WaitlistForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [email, setEmail] = useState("");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const form = e.target;
-    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(new FormData(form)).toString() }).then(() => setSubmitted(true)).catch(() => setSubmitted(true));
+    try {
+      await fetch("/api/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) });
+      setSubmitted(true);
+    } catch {
+      setSubmitted(true);
+    }
   }
 
   if (submitted) return (<div className="mt-3 rounded-2xl border border-armenian-blue/30 bg-armenian-blue/10 p-4 text-center text-sm text-armenian-blue font-semibold">You're on the list! 🎉</div>);
 
   return (
-    <form onSubmit={handleSubmit} name="waitlist" method="POST" data-netlify="true" className="mt-3 flex flex-col gap-2 sm:flex-row">
-      <input type="hidden" name="form-name" value="waitlist" />
-      <input type="email" name="email" required placeholder="Your email address" className="w-full rounded-xl border border-armenian-ink/15 bg-white px-4 py-2 text-sm outline-none focus:border-armenian-blue" />
-      <button type="submit" className="whitespace-nowrap rounded-xl bg-armenian-red px-4 py-2 text-sm font-bold text-white hover:bg-armenian-red/80">Notify Me</button>
-    </form>
+    <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+      <input type="email" required placeholder="Your email address" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-xl border border-armenian-ink/15 bg-white px-4 py-2 text-sm outline-none focus:border-armenian-blue" />
+      <button onClick={handleSubmit} className="whitespace-nowrap rounded-xl bg-armenian-red px-4 py-2 text-sm font-bold text-white hover:bg-armenian-red/80">Notify Me</button>
+    </div>
   );
 }
 
 function SubscribeBar() {
   const [submitted, setSubmitted] = useState(false);
+  const [email, setEmail] = useState("");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const form = e.target;
-    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(new FormData(form)).toString() }).then(() => setSubmitted(true)).catch(() => setSubmitted(true));
+    try {
+      await fetch("/api/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) });
+      setSubmitted(true);
+    } catch {
+      setSubmitted(true);
+    }
   }
 
   if (submitted) return (<div className="rounded-2xl bg-armenian-blue/10 border border-armenian-blue/30 p-6 text-center text-armenian-blue font-semibold">You're on the list! Thank you. 🎉</div>);
@@ -39,11 +48,10 @@ function SubscribeBar() {
       <div className="max-w-xl mx-auto text-center">
         <p className="font-display text-2xl font-black">Stay in the loop</p>
         <p className="mt-2 text-armenian-cream/70">New books, Armenian language tips, and updates — straight to your inbox.</p>
-        <form onSubmit={handleSubmit} name="subscribe" method="POST" data-netlify="true" className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <input type="hidden" name="form-name" value="subscribe" />
-          <input type="email" name="email" required placeholder="Your email address" className="w-full sm:w-80 rounded-xl border border-armenian-cream/20 bg-armenian-cream/10 px-4 py-3 text-sm text-armenian-cream placeholder:text-armenian-cream/50 outline-none focus:border-armenian-apricot" />
-          <button type="submit" className="whitespace-nowrap rounded-xl bg-armenian-apricot px-6 py-3 text-sm font-bold text-armenian-ink hover:bg-[#ffb724]">Subscribe</button>
-        </form>
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <input type="email" required placeholder="Your email address" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full sm:w-80 rounded-xl border border-armenian-cream/20 bg-armenian-cream/10 px-4 py-3 text-sm text-armenian-cream placeholder:text-armenian-cream/50 outline-none focus:border-armenian-apricot" />
+          <button onClick={handleSubmit} className="whitespace-nowrap rounded-xl bg-armenian-apricot px-6 py-3 text-sm font-bold text-armenian-ink hover:bg-[#ffb724]">Subscribe</button>
+        </div>
       </div>
     </div>
   );
@@ -78,10 +86,9 @@ export default function Shop() {
             </Link>
           </div>
         ))}
-        {/* Single waitlist for books 2 & 3 */}
         <div className="rounded-2xl bg-armenian-apricot/10 border border-armenian-apricot/30 p-4">
           <p className="font-display text-lg font-bold text-armenian-ink">Join the Wait List</p>
-          <p className="mt-1 text-sm text-armenian-ink/70">Be the first to know when more books are available.</p>
+          <p className="mt-1 text-sm text-armenian-ink/70">Be the first to know when Plants & Garden and In the Home are available.</p>
           <WaitlistForm />
         </div>
       </div>
@@ -92,13 +99,12 @@ export default function Shop() {
           <div key={book.slug}>
             <BookCard book={book} />
             {!book.amazonUrl && (
-              <p className="mt-2 text-center text-xs font-black uppercase tracking-wide text-armenian-red">Join Waitlist Below</p>
+              <p className="mt-2 text-center text-xs font-black uppercase tracking-wide text-armenian-red">Sold Out. Join Waitlist Below</p>
             )}
           </div>
         ))}
       </div>
 
-      {/* Single waitlist for desktop */}
       <div className="hidden sm:block mt-6 rounded-2xl bg-armenian-apricot/10 border border-armenian-apricot/30 p-6">
         <p className="font-display text-xl font-bold text-armenian-ink">Join the Wait List</p>
         <p className="mt-1 text-sm text-armenian-ink/70">Be the first to know when Plants & Garden and In the Home are available.</p>
