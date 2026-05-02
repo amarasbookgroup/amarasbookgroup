@@ -3,7 +3,7 @@ import BookCard from "../components/BookCard.jsx";
 import { books } from "../data/books.js";
 import { Link } from "react-router";
 
-function WaitlistForm({ bookName, formName }) {
+function WaitlistForm() {
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(e) {
@@ -15,9 +15,8 @@ function WaitlistForm({ bookName, formName }) {
   if (submitted) return (<div className="mt-3 rounded-2xl border border-armenian-blue/30 bg-armenian-blue/10 p-4 text-center text-sm text-armenian-blue font-semibold">You're on the list! 🎉</div>);
 
   return (
-    <form onSubmit={handleSubmit} name={formName} method="POST" data-netlify="true" className="mt-3 flex flex-col gap-2 sm:flex-row">
-      <input type="hidden" name="form-name" value={formName} />
-      <input type="hidden" name="book" value={bookName} />
+    <form onSubmit={handleSubmit} name="waitlist" method="POST" data-netlify="true" className="mt-3 flex flex-col gap-2 sm:flex-row">
+      <input type="hidden" name="form-name" value="waitlist" />
       <input type="email" name="email" required placeholder="Your email address" className="w-full rounded-xl border border-armenian-ink/15 bg-white px-4 py-2 text-sm outline-none focus:border-armenian-blue" />
       <button type="submit" className="whitespace-nowrap rounded-xl bg-armenian-red px-4 py-2 text-sm font-bold text-white hover:bg-armenian-red/80">Notify Me</button>
     </form>
@@ -71,21 +70,20 @@ export default function Shop() {
                   <h3 className="mt-1 font-display text-lg font-black text-armenian-ink leading-tight">{book.title}</h3>
                   <p className="mt-1 text-xs text-armenian-ink/70 line-clamp-2">{book.tagline}</p>
                 </div>
-                <div className="mt-2 flex items-center justify-between">
+                <div className="mt-2">
                   <span className="font-bold text-armenian-red">{book.price}</span>
-                  <span className="text-xs font-semibold text-armenian-blue">View details &rarr;</span>
+                  {!book.amazonUrl && <p className="mt-1 text-xs font-black uppercase tracking-wide text-armenian-red">Sold Out. Join Waitlist Below</p>}
                 </div>
               </div>
             </Link>
-            {!book.amazonUrl && (
-              <div className="mt-2 rounded-2xl bg-armenian-apricot/10 border border-armenian-apricot/30 p-4">
-                <p className="text-sm font-bold text-armenian-ink">Join the Wait List</p>
-                <p className="mt-1 text-xs text-armenian-ink/70">Be the first to know when this book is available.</p>
-                <WaitlistForm bookName={book.title} formName={book.slug === "plants-and-garden" ? "waitlist-plants" : "waitlist-home"} />
-              </div>
-            )}
           </div>
         ))}
+        {/* Single waitlist for books 2 & 3 */}
+        <div className="rounded-2xl bg-armenian-apricot/10 border border-armenian-apricot/30 p-4">
+          <p className="font-display text-lg font-bold text-armenian-ink">Join the Wait List</p>
+          <p className="mt-1 text-sm text-armenian-ink/70">Be the first to know when Plants & Garden and In the Home are available.</p>
+          <WaitlistForm />
+        </div>
       </div>
 
       {/* Desktop: grid view */}
@@ -94,14 +92,17 @@ export default function Shop() {
           <div key={book.slug}>
             <BookCard book={book} />
             {!book.amazonUrl && (
-              <div className="mt-3 rounded-2xl bg-armenian-apricot/10 border border-armenian-apricot/30 p-4">
-                <p className="text-sm font-bold text-armenian-ink">Join the Wait List</p>
-                <p className="mt-1 text-xs text-armenian-ink/70">Be the first to know when this book is available.</p>
-                <WaitlistForm bookName={book.title} formName={book.slug === "plants-and-garden" ? "waitlist-plants" : "waitlist-home"} />
-              </div>
+              <p className="mt-2 text-center text-xs font-black uppercase tracking-wide text-armenian-red">Sold Out. Join Waitlist Below</p>
             )}
           </div>
         ))}
+      </div>
+
+      {/* Single waitlist for desktop */}
+      <div className="hidden sm:block mt-6 rounded-2xl bg-armenian-apricot/10 border border-armenian-apricot/30 p-6">
+        <p className="font-display text-xl font-bold text-armenian-ink">Join the Wait List</p>
+        <p className="mt-1 text-sm text-armenian-ink/70">Be the first to know when Plants & Garden and In the Home are available.</p>
+        <WaitlistForm />
       </div>
 
       <div className="mt-10">
